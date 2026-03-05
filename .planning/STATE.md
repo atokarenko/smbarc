@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-05T13:06:43Z"
-last_activity: 2026-03-05 -- Plan 01-01 executed (project bootstrap + i18n)
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-03-05T13:14:06Z"
+last_activity: 2026-03-05 -- Plan 01-02 executed (auth, AI abstraction, demo data)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 8
+  completed_plans: 2
+  percent: 67
 ---
 
 # Project State
@@ -26,28 +26,28 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 1 of 4 (Platform Foundation)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-03-05 -- Plan 01-01 executed (project bootstrap + i18n)
+Last activity: 2026-03-05 -- Plan 01-02 executed (auth, AI abstraction, demo data)
 
-Progress: [#░░░░░░░░░] 8%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 7min
-- Total execution time: 0.12 hours
+- Total plans completed: 2
+- Average duration: 6min
+- Total execution time: 0.2 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-platform-foundation | 1/3 | 7min | 7min |
+| 01-platform-foundation | 2/3 | 12min | 6min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (7min)
-- Trend: starting
+- Last 5 plans: 01-01 (7min), 01-02 (5min)
+- Trend: accelerating
 
 *Updated after each plan completion*
 
@@ -62,6 +62,8 @@ Recent decisions affecting current work:
 - [Roadmap]: Phase 2 is highest-risk (AI integration, prompt engineering) -- research-phase recommended before planning
 - [01-01]: Downgraded Prisma from v7 to v6 -- v7 removed datasource url from schema, incompatible with better-auth adapter
 - [01-01]: Used @testing-library/jest-dom/vitest import for Vitest v4 compatibility
+- [01-02]: Installed @better-auth/prisma-adapter as separate package -- better-auth re-exports require it
+- [01-02]: Demo users created via signUp flow on first click rather than pre-hashed seed passwords
 
 ### Pending Todos
 
@@ -75,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-05T13:06:43Z
-Stopped at: Completed 01-01-PLAN.md
-Resume file: .planning/phases/01-platform-foundation/01-01-SUMMARY.md
+Last session: 2026-03-05T13:14:06Z
+Stopped at: Completed 01-02-PLAN.md
+Resume file: .planning/phases/01-platform-foundation/01-02-SUMMARY.md
