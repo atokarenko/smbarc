@@ -12,7 +12,7 @@ AI Architect delivers a self-serve AI assessment platform for SMB in four phases
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Platform Foundation** - Project skeleton with auth, i18n, AI provider abstraction, and demo profiles
+- [x] **Phase 1: Platform Foundation** - Project skeleton with auth, i18n, AI provider abstraction, and demo profiles
 - [ ] **Phase 2: Assessment & AI Engine** - Hybrid business scan with AI follow-ups, maturity scoring, risk mapping, and ROI forecasting
 - [ ] **Phase 3: Dashboard & Reporting** - Visual dashboard with role-based views, charts, and PDF export
 - [ ] **Phase 4: Module Catalog** - Browsable AI module catalog with personalized recommendations from assessment results
@@ -31,9 +31,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffold, dependencies, Prisma DB, i18n (EN/RU), Vitest test infra
-- [ ] 01-02-PLAN.md — Better Auth + demo mode, AI provider abstraction, demo company seed data
-- [ ] 01-03-PLAN.md — App shell layout (sidebar, header, theme), all pages, dashboard with demo data
+- [x] 01-01-PLAN.md — Project scaffold, dependencies, Prisma DB, i18n (EN/RU), Vitest test infra
+- [x] 01-02-PLAN.md — Better Auth + demo mode, AI provider abstraction, demo company seed data
+- [x] 01-03-PLAN.md — App shell layout (sidebar, header, theme), all pages, dashboard with demo data
 
 ### Phase 2: Assessment & AI Engine
 **Goal**: User can complete a full business assessment (questionnaire + AI follow-ups) and receive AI-generated maturity score, automation roadmap, risk map, and ROI forecast
@@ -87,7 +87,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Platform Foundation | 0/3 | Not started | - |
+| 1. Platform Foundation | 3/3 | Complete | 2026-03-05 |
 | 2. Assessment & AI Engine | 0/3 | Not started | - |
 | 3. Dashboard & Reporting | 0/2 | Not started | - |
 | 4. Module Catalog | 0/1 | Not started | - |
