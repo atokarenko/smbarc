@@ -38,7 +38,7 @@
 
 ### Platform
 
-- [ ] **PLAT-01**: Interface available in English and Russian with language switcher
+- [x] **PLAT-01**: Interface available in English and Russian with language switcher
 - [ ] **PLAT-02**: User can register, log in, and select role (CEO/COO/CTO)
 - [ ] **PLAT-03**: Pre-loaded demo company profiles to showcase results without completing full scan
 - [ ] **PLAT-04**: AI provider abstraction layer supporting claude-max-proxy locally, swappable to other providers
@@ -78,7 +78,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLAT-01 | Phase 1 | Pending |
+| PLAT-01 | Phase 1 | Complete |
 | PLAT-02 | Phase 1 | Pending |
 | PLAT-03 | Phase 1 | Pending |
 | PLAT-04 | Phase 1 | Pending |
