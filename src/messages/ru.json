@@ -53,12 +53,56 @@
       }
     }
   },
+  "dashboard": {
+    "title": "Панель управления",
+    "noData": "Нет данных оценки. Пройдите оценку или выберите демо-компанию.",
+    "maturityScore": "Уровень зрелости AI",
+    "maturityDescription": "Общая оценка AI-готовности по пяти ключевым измерениям",
+    "dimensions": {
+      "strategy": "Стратегия",
+      "adoption": "Внедрение",
+      "riskManagement": "Управление рисками",
+      "roiTracking": "Отслеживание ROI",
+      "governance": "Управление"
+    },
+    "roadmapItems": "Пунктов дорожной карты",
+    "risks": "Выявленных рисков",
+    "projectedRoi": "Прогноз ROI",
+    "levels": {
+      "beginner": "Начинающий",
+      "developing": "Развивающийся",
+      "intermediate": "Средний",
+      "advanced": "Продвинутый",
+      "leader": "Лидер"
+    }
+  },
+  "settings": {
+    "profile": "Профиль",
+    "profileDescription": "Информация вашей учётной записи",
+    "role": "Роль",
+    "roleDescription": "Ваша роль определяет перспективу представления данных",
+    "currentRole": "Текущая роль",
+    "language": "Язык",
+    "languageDescription": "Выберите предпочтительный язык интерфейса"
+  },
   "onboarding": {
     "welcome": "Добро пожаловать в AI Architect",
+    "subtitle": "Расскажите о вашей компании, чтобы начать",
     "companyName": "Название компании",
+    "companyPlaceholder": "Введите название компании",
     "selectRole": "Ваша роль",
     "selectIndustry": "Отрасль",
-    "continue": "Продолжить"
+    "industryPlaceholder": "Выберите вашу отрасль",
+    "continue": "Продолжить",
+    "submitting": "Настраиваем...",
+    "industries": {
+      "retail": "Розничная торговля",
+      "finance": "Финансовые услуги",
+      "manufacturing": "Производство",
+      "technology": "Технологии",
+      "healthcare": "Здравоохранение",
+      "other": "Другое"
+    }
   },
   "pages": {
     "comingSoon": "Скоро будет"

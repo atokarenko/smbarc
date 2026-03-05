@@ -53,12 +53,56 @@
       }
     }
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "noData": "No assessment data available. Complete an assessment or select a demo company.",
+    "maturityScore": "AI Maturity Score",
+    "maturityDescription": "Overall AI readiness assessment across five key dimensions",
+    "dimensions": {
+      "strategy": "Strategy",
+      "adoption": "Adoption",
+      "riskManagement": "Risk Management",
+      "roiTracking": "ROI Tracking",
+      "governance": "Governance"
+    },
+    "roadmapItems": "Roadmap Items",
+    "risks": "Identified Risks",
+    "projectedRoi": "Projected ROI",
+    "levels": {
+      "beginner": "Beginner",
+      "developing": "Developing",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "leader": "Leader"
+    }
+  },
+  "settings": {
+    "profile": "Profile",
+    "profileDescription": "Your account information",
+    "role": "Role",
+    "roleDescription": "Your role determines the perspective of data presentation",
+    "currentRole": "Current role",
+    "language": "Language",
+    "languageDescription": "Choose your preferred interface language"
+  },
   "onboarding": {
     "welcome": "Welcome to AI Architect",
+    "subtitle": "Tell us about your company to get started",
     "companyName": "Company name",
+    "companyPlaceholder": "Enter your company name",
     "selectRole": "Your role",
     "selectIndustry": "Industry",
-    "continue": "Continue"
+    "industryPlaceholder": "Select your industry",
+    "continue": "Continue",
+    "submitting": "Setting up...",
+    "industries": {
+      "retail": "Retail & E-commerce",
+      "finance": "Financial Services",
+      "manufacturing": "Manufacturing",
+      "technology": "Technology",
+      "healthcare": "Healthcare",
+      "other": "Other"
+    }
   },
   "pages": {
     "comingSoon": "Coming soon"
