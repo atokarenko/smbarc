@@ -1,0 +1,42 @@
+{
+  "common": {
+    "appName": "AI Architect",
+    "navigation": {
+      "dashboard": "Панель управления",
+      "scan": "Оценка",
+      "roadmap": "Дорожная карта",
+      "risks": "Риски",
+      "roi": "ROI",
+      "modules": "Модули",
+      "settings": "Настройки"
+    },
+    "roles": {
+      "ceo": "Генеральный директор",
+      "coo": "Операционный директор",
+      "cto": "Технический директор"
+    },
+    "actions": {
+      "login": "Войти",
+      "register": "Регистрация",
+      "logout": "Выйти",
+      "tryDemo": "Попробовать демо",
+      "switchLanguage": "Сменить язык"
+    }
+  },
+  "demo": {
+    "title": "Выберите демо-компанию",
+    "subtitle": "Результаты AI-готовности для примеров компаний",
+    "selectRole": "Выберите роль",
+    "viewResults": "Посмотреть результаты"
+  },
+  "onboarding": {
+    "welcome": "Добро пожаловать в AI Architect",
+    "companyName": "Название компании",
+    "selectRole": "Ваша роль",
+    "selectIndustry": "Отрасль",
+    "continue": "Продолжить"
+  },
+  "pages": {
+    "comingSoon": "Скоро будет"
+  }
+}

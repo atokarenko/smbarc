@@ -1,0 +1,42 @@
+{
+  "common": {
+    "appName": "AI Architect",
+    "navigation": {
+      "dashboard": "Dashboard",
+      "scan": "Assessment",
+      "roadmap": "Roadmap",
+      "risks": "Risks",
+      "roi": "ROI",
+      "modules": "Modules",
+      "settings": "Settings"
+    },
+    "roles": {
+      "ceo": "CEO",
+      "coo": "COO",
+      "cto": "CTO"
+    },
+    "actions": {
+      "login": "Log in",
+      "register": "Sign up",
+      "logout": "Log out",
+      "tryDemo": "Try Demo",
+      "switchLanguage": "Switch language"
+    }
+  },
+  "demo": {
+    "title": "Select a Demo Company",
+    "subtitle": "Explore AI readiness results for sample companies",
+    "selectRole": "Select your role",
+    "viewResults": "View Results"
+  },
+  "onboarding": {
+    "welcome": "Welcome to AI Architect",
+    "companyName": "Company name",
+    "selectRole": "Your role",
+    "selectIndustry": "Industry",
+    "continue": "Continue"
+  },
+  "pages": {
+    "comingSoon": "Coming soon"
+  }
+}
