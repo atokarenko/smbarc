@@ -28,11 +28,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. User can switch interface language between English and Russian, and all UI text renders in the selected language
   3. User can select a pre-loaded demo company profile and see placeholder results without completing a scan
   4. Application uses AI provider abstraction layer that connects to claude-max-proxy locally
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Project scaffold, dependencies, Prisma DB, i18n (EN/RU), Vitest test infra
+- [ ] 01-02-PLAN.md — Better Auth + demo mode, AI provider abstraction, demo company seed data
+- [ ] 01-03-PLAN.md — App shell layout (sidebar, header, theme), all pages, dashboard with demo data
 
 ### Phase 2: Assessment & AI Engine
 **Goal**: User can complete a full business assessment (questionnaire + AI follow-ups) and receive AI-generated maturity score, automation roadmap, risk map, and ROI forecast
@@ -86,7 +87,7 @@ Phases execute in numeric order: 1 > 2 > 3 > 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Platform Foundation | 0/2 | Not started | - |
+| 1. Platform Foundation | 0/3 | Not started | - |
 | 2. Assessment & AI Engine | 0/3 | Not started | - |
 | 3. Dashboard & Reporting | 0/2 | Not started | - |
 | 4. Module Catalog | 0/1 | Not started | - |
