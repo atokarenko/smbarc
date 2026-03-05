@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 export default async function HomePage({
   params,
@@ -29,9 +30,11 @@ function HomeContent() {
       </p>
 
       <div className="flex gap-4">
-        <Button size="lg">{t("common.actions.tryDemo")}</Button>
-        <Button size="lg" variant="outline">
-          {t("common.actions.login")}
+        <Button size="lg" asChild>
+          <Link href="/login">{t("common.actions.tryDemo")}</Link>
+        </Button>
+        <Button size="lg" variant="outline" asChild>
+          <Link href="/login">{t("common.actions.login")}</Link>
         </Button>
       </div>
     </div>
