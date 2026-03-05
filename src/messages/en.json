@@ -23,11 +23,35 @@
       "switchLanguage": "Switch language"
     }
   },
+  "auth": {
+    "loginTitle": "Try Demo",
+    "loginSubtitle": "Select a demo persona to explore the platform",
+    "orLogin": "Or sign in with email",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in...",
+    "error": "Sign-in failed. Please check your credentials."
+  },
   "demo": {
-    "title": "Select a Demo Company",
+    "title": "Select a Demo Persona",
     "subtitle": "Explore AI readiness results for sample companies",
     "selectRole": "Select your role",
-    "viewResults": "View Results"
+    "viewResults": "View Results",
+    "entering": "Entering demo...",
+    "roles": {
+      "ceo": {
+        "title": "CEO",
+        "description": "Strategic overview of AI readiness, ROI forecasts, and business impact"
+      },
+      "coo": {
+        "title": "COO",
+        "description": "Operations focus on automation roadmap, risk management, and process optimization"
+      },
+      "cto": {
+        "title": "CTO",
+        "description": "Technical perspective on AI maturity, architecture, and implementation details"
+      }
+    }
   },
   "onboarding": {
     "welcome": "Welcome to AI Architect",
