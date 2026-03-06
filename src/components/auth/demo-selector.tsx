@@ -47,22 +47,22 @@ export function DemoSelector() {
     const name = t(`roles.${role}.title`);
 
     try {
-      // Try sign-in first (user may already exist from previous demo)
-      const signInResult = await authClient.signIn.email({
+      // Try sign-up first (fresh demo)
+      const signUpResult = await authClient.signUp.email({
         email,
         password,
+        name,
       });
 
-      if (signInResult.error) {
-        // If sign-in fails, sign up
-        const signUpResult = await authClient.signUp.email({
+      if (signUpResult.error) {
+        // User already exists — sign in instead
+        const signInResult = await authClient.signIn.email({
           email,
           password,
-          name,
         });
 
-        if (signUpResult.error) {
-          setError(signUpResult.error.message || "Demo login failed");
+        if (signInResult.error) {
+          setError(signInResult.error.message || "Demo login failed");
           setLoading(null);
           return;
         }
