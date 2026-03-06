@@ -75,10 +75,10 @@ Plans:
   1. User can browse a catalog of AI modules organized by domain (HR, Finance, Legal, Decision Making)
   2. Each module displays description, expected impact, and relevance to the user's assessment results
   3. Modules are ranked and recommended based on the user's specific assessment data
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md — Module catalog: static data layer with recommendation scoring, card-grid UI with category filtering and bilingual support
 
 ## Progress
 
