@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 02-01-PLAN.md (business-first rewrite)
-last_updated: "2026-03-06T14:41:05.559Z"
+last_updated: "2026-03-06T14:47:13.038Z"
 last_activity: 2026-03-06 -- Plan 02-01 re-executed (business-first data layer rewrite)
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 83
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 2 of 4 (Assessment & AI Engine)
-Plan: 3 of 3 in current phase (02-01 rewrite complete)
+Plan: 3 of 3 in current phase (02-02 complete, 02-03 next)
 Status: In progress
-Last activity: 2026-03-06 -- Plan 02-01 re-executed (business-first data layer rewrite)
+Last activity: 2026-03-06 -- Plan 02-02 executed (AI prompts + UI text rewrite)
 
-Progress: [████████░░] 83% (overall)
+Progress: [██████████] 100% (overall)
 
 ## Performance Metrics
 
@@ -44,7 +44,7 @@ Progress: [████████░░] 83% (overall)
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-platform-foundation | 3/3 | 20min | 7min |
-| 02-assessment-ai-engine | 2/3 | 9min | 5min |
+| 02-assessment-ai-engine | 2/3 | 14min | 5min |
 
 **Recent Trend:**
 - Last 5 plans: 01-02 (5min), 01-03 (8min), 02-01 (5min), 02-02 (4min)
@@ -52,6 +52,7 @@ Progress: [████████░░] 83% (overall)
 
 *Updated after each plan completion*
 | Phase 02 P01 | 5min | 3 tasks | 8 files |
+| Phase 02 P02 | 5min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [02-01]: Zod schemas mirror TypeScript interfaces exactly -- compile-time type safety verified in tests
 - [02-02]: User role read from User.role directly (no CompanyMember table); debounce 300ms for auto-save
 - [02-02]: Static suggestion chips as placeholder -- 3 generic responses per locale, Plan 03 wires AI
+- [02-02]: Prompt personas: business detective (follow-ups), efficiency analyst (scoring), risk analyst (ROI)
+- [02-02]: Conservative ROI projections with visible assumptions and evidence-based confidence levels
+- [02-02]: assessment-config.tsx hardcoded text also updated (deviation fix for consistency)
 
 ### Pending Todos
 
@@ -89,6 +93,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-06T14:41:05.557Z
-Stopped at: Completed 02-01-PLAN.md (business-first rewrite)
+Last session: 2026-03-06T14:46:22Z
+Stopped at: Completed 02-02-PLAN.md (AI prompts + UI text rewrite)
 Resume file: None

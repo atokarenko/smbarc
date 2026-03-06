@@ -16,9 +16,9 @@
 
 - [x] **SCORE-01**: System generates AI Maturity Score with breakdown by dimensions (strategy, adoption, risk management, ROI tracking, governance)
 - [x] **SCORE-02**: Maturity Score is grounded in methodology (CMMI-inspired levels) with clear explanation of each level
-- [ ] **SCORE-03**: System generates Automation Roadmap -- what to automate, in what order, with expected impact
-- [ ] **SCORE-04**: System generates Risk Map covering legal, financial, reputational, operational, and data risks
-- [ ] **SCORE-05**: System generates ROI Forecast with ranges and visible assumptions (not false-precision point estimates)
+- [x] **SCORE-03**: System generates Automation Roadmap -- what to automate, in what order, with expected impact
+- [x] **SCORE-04**: System generates Risk Map covering legal, financial, reputational, operational, and data risks
+- [x] **SCORE-05**: System generates ROI Forecast with ranges and visible assumptions (not false-precision point estimates)
 - [x] **SCORE-06**: All analysis outputs are generated via AI with Zod-validated structured output
 
 ### Dashboard
@@ -88,9 +88,9 @@
 | SCAN-04 | Phase 2 | Complete |
 | SCORE-01 | Phase 2 | Complete |
 | SCORE-02 | Phase 2 | Complete |
-| SCORE-03 | Phase 2 | Pending |
-| SCORE-04 | Phase 2 | Pending |
-| SCORE-05 | Phase 2 | Pending |
+| SCORE-03 | Phase 2 | Complete |
+| SCORE-04 | Phase 2 | Complete |
+| SCORE-05 | Phase 2 | Complete |
 | SCORE-06 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
