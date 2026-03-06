@@ -1,5 +1,41 @@
+import { headers } from "next/headers";
 import { setRequestLocale } from "next-intl/server";
-import { PlaceholderPage } from "@/components/layout/placeholder-page";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/db/prisma";
+import type { AssessmentResults } from "@/lib/demo-data";
+import { RoadmapContent } from "./roadmap-content";
+
+async function loadAssessmentData(
+  userId: string
+): Promise<AssessmentResults | null> {
+  const userAssessment = await prisma.assessment.findFirst({
+    where: { userId, status: "COMPLETE" },
+    orderBy: { updatedAt: "desc" },
+    select: { results: true },
+  });
+
+  if (userAssessment?.results) {
+    try {
+      return JSON.parse(userAssessment.results) as AssessmentResults;
+    } catch {
+      // Invalid JSON, fall through to demo
+    }
+  }
+
+  const demoCompany = await prisma.company.findFirst({
+    where: { isDemo: true },
+  });
+
+  if (demoCompany?.assessmentResults) {
+    try {
+      return JSON.parse(demoCompany.assessmentResults) as AssessmentResults;
+    } catch {
+      // Invalid JSON
+    }
+  }
+
+  return null;
+}
 
 export default async function RoadmapPage({
   params,
@@ -9,5 +45,22 @@ export default async function RoadmapPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <PlaceholderPage titleKey="common.navigation.roadmap" />;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  let assessment: AssessmentResults | null = null;
+  let role = "ceo";
+
+  if (session?.user) {
+    assessment = await loadAssessmentData(session.user.id);
+    role = (session.user as { role?: string }).role || "ceo";
+  }
+
+  return (
+    <RoadmapContent
+      items={assessment?.automationRoadmap ?? []}
+      role={role}
+    />
+  );
 }

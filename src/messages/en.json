@@ -138,6 +138,41 @@
       "message": "Thank you for completing the assessment! Your business health analysis has been generated."
     }
   },
+  "roadmap": {
+    "title": "Automation Roadmap",
+    "noData": "Complete an assessment to see your automation roadmap.",
+    "startAssessment": "Start Assessment",
+    "priority": "Priority",
+    "timeline": "Timeline",
+    "impact": "Expected Impact",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "risks": {
+    "title": "Risk Map",
+    "noData": "Complete an assessment to see your risk map.",
+    "startAssessment": "Start Assessment",
+    "category": "Category",
+    "severity": "Severity",
+    "mitigation": "Mitigation",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "roi": {
+    "title": "ROI Forecast",
+    "noData": "Complete an assessment to see your ROI forecast.",
+    "startAssessment": "Start Assessment",
+    "totalSavings": "Total Projected Savings",
+    "timeframe": "Timeframe",
+    "area": "Area",
+    "currentCost": "Current Cost",
+    "projectedSaving": "Projected Saving",
+    "confidence": "Confidence",
+    "savingPercent": "Saving %",
+    "areasAnalyzed": "{count} areas analyzed"
+  },
   "pages": {
     "comingSoon": "Coming soon"
   }
