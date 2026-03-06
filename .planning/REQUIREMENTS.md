@@ -8,7 +8,7 @@
 ### Assessment
 
 - [x] **SCAN-01**: User can complete structured questionnaire covering business processes, current AI usage, risks, and strategy
-- [ ] **SCAN-02**: AI generates follow-up questions based on user's answers to dig deeper into specific areas
+- [x] **SCAN-02**: AI generates follow-up questions based on user's answers to dig deeper into specific areas
 - [x] **SCAN-03**: User can pause assessment and resume from where they left off
 - [x] **SCAN-04**: Assessment progress is visible (progress bar, sections completed)
 
@@ -83,7 +83,7 @@
 | PLAT-03 | Phase 1 | Complete |
 | PLAT-04 | Phase 1 | Complete |
 | SCAN-01 | Phase 2 | Complete |
-| SCAN-02 | Phase 2 | Pending |
+| SCAN-02 | Phase 2 | Complete |
 | SCAN-03 | Phase 2 | Complete |
 | SCAN-04 | Phase 2 | Complete |
 | SCORE-01 | Phase 2 | Complete |
