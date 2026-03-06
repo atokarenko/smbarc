@@ -7,19 +7,19 @@
 
 ### Assessment
 
-- [ ] **SCAN-01**: User can complete structured questionnaire covering business processes, current AI usage, risks, and strategy
+- [x] **SCAN-01**: User can complete structured questionnaire covering business processes, current AI usage, risks, and strategy
 - [ ] **SCAN-02**: AI generates follow-up questions based on user's answers to dig deeper into specific areas
-- [ ] **SCAN-03**: User can pause assessment and resume from where they left off
-- [ ] **SCAN-04**: Assessment progress is visible (progress bar, sections completed)
+- [x] **SCAN-03**: User can pause assessment and resume from where they left off
+- [x] **SCAN-04**: Assessment progress is visible (progress bar, sections completed)
 
 ### Scoring & Analysis
 
-- [ ] **SCORE-01**: System generates AI Maturity Score with breakdown by dimensions (strategy, adoption, risk management, ROI tracking, governance)
-- [ ] **SCORE-02**: Maturity Score is grounded in methodology (CMMI-inspired levels) with clear explanation of each level
+- [x] **SCORE-01**: System generates AI Maturity Score with breakdown by dimensions (strategy, adoption, risk management, ROI tracking, governance)
+- [x] **SCORE-02**: Maturity Score is grounded in methodology (CMMI-inspired levels) with clear explanation of each level
 - [ ] **SCORE-03**: System generates Automation Roadmap -- what to automate, in what order, with expected impact
 - [ ] **SCORE-04**: System generates Risk Map covering legal, financial, reputational, operational, and data risks
 - [ ] **SCORE-05**: System generates ROI Forecast with ranges and visible assumptions (not false-precision point estimates)
-- [ ] **SCORE-06**: All analysis outputs are generated via AI with Zod-validated structured output
+- [x] **SCORE-06**: All analysis outputs are generated via AI with Zod-validated structured output
 
 ### Dashboard
 
@@ -82,16 +82,16 @@
 | PLAT-02 | Phase 1 | Complete |
 | PLAT-03 | Phase 1 | Complete |
 | PLAT-04 | Phase 1 | Complete |
-| SCAN-01 | Phase 2 | Pending |
+| SCAN-01 | Phase 2 | Complete |
 | SCAN-02 | Phase 2 | Pending |
-| SCAN-03 | Phase 2 | Pending |
-| SCAN-04 | Phase 2 | Pending |
-| SCORE-01 | Phase 2 | Pending |
-| SCORE-02 | Phase 2 | Pending |
+| SCAN-03 | Phase 2 | Complete |
+| SCAN-04 | Phase 2 | Complete |
+| SCORE-01 | Phase 2 | Complete |
+| SCORE-02 | Phase 2 | Complete |
 | SCORE-03 | Phase 2 | Pending |
 | SCORE-04 | Phase 2 | Pending |
 | SCORE-05 | Phase 2 | Pending |
-| SCORE-06 | Phase 2 | Pending |
+| SCORE-06 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
