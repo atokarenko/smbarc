@@ -45,12 +45,12 @@ Plans:
   3. User can pause an in-progress assessment and resume from where they left off, with progress visibly tracked
   4. After completing the assessment, user sees an AI Maturity Score with named levels and breakdown by dimensions (strategy, adoption, risk management, ROI tracking, governance)
   5. After completing the assessment, user sees an automation roadmap, risk map, and ROI forecast -- all generated via AI with validated structured output
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
-- [ ] 02-03: TBD
+- [ ] 02-01-PLAN.md — Assessment data foundation: Prisma model, types, questionnaire definitions, scoring formula, Zod schemas
+- [ ] 02-02-PLAN.md — Assessment questionnaire UI: multi-step form with stepper, auto-save, pause/resume, suggestion chips
+- [ ] 02-03-PLAN.md — AI integration: follow-up generation, scoring pipeline, processing screen, end-to-end wiring
 
 ### Phase 3: Dashboard & Reporting
 **Goal**: User sees a comprehensive dashboard presenting all assessment outputs with role-appropriate views, charts, and exportable reports
