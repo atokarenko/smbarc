@@ -34,14 +34,14 @@
   },
   "demo": {
     "title": "Select a Demo Persona",
-    "subtitle": "Explore AI readiness results for sample companies",
+    "subtitle": "Explore business health results for sample companies",
     "selectRole": "Select your role",
     "viewResults": "View Results",
     "entering": "Entering demo...",
     "roles": {
       "ceo": {
         "title": "CEO",
-        "description": "Strategic overview of AI readiness, ROI forecasts, and business impact"
+        "description": "Strategic overview of business health, ROI forecasts, and growth opportunities"
       },
       "coo": {
         "title": "COO",
@@ -49,31 +49,31 @@
       },
       "cto": {
         "title": "CTO",
-        "description": "Technical perspective on AI maturity, architecture, and implementation details"
+        "description": "Technical perspective on automation tools, architecture, and implementation details"
       }
     }
   },
   "dashboard": {
     "title": "Dashboard",
     "noData": "No assessment data available. Complete an assessment or select a demo company.",
-    "maturityScore": "AI Maturity Score",
-    "maturityDescription": "Overall AI readiness assessment across five key dimensions",
+    "maturityScore": "Business Health Score",
+    "maturityDescription": "Overall business health assessment across five key areas",
     "dimensions": {
-      "strategy": "Strategy",
-      "adoption": "Adoption",
-      "riskManagement": "Risk Management",
-      "roiTracking": "ROI Tracking",
-      "governance": "Governance"
+      "operations": "Operations",
+      "sales": "Sales",
+      "finance": "Finance",
+      "team": "Team",
+      "risks": "Risks"
     },
     "roadmapItems": "Roadmap Items",
     "risks": "Identified Risks",
     "projectedRoi": "Projected ROI",
     "levels": {
-      "beginner": "Beginner",
-      "developing": "Developing",
-      "intermediate": "Intermediate",
-      "advanced": "Advanced",
-      "leader": "Leader"
+      "critical": "Critical",
+      "struggling": "Struggling",
+      "stable": "Stable",
+      "efficient": "Efficient",
+      "optimized": "Optimized"
     }
   },
   "settings": {
@@ -106,7 +106,7 @@
   },
   "assessment": {
     "start": {
-      "title": "AI Maturity Assessment",
+      "title": "Business Health Assessment",
       "aiDecideToggle": "AI Decides",
       "aiDecideDescription": "Let AI decide how many follow-up questions to ask based on your answers. Default: 5-8 follow-ups.",
       "begin": "Start Assessment"
@@ -130,7 +130,7 @@
     },
     "complete": {
       "title": "Assessment Complete",
-      "message": "Thank you for completing the assessment! AI analysis will be available in a future update."
+      "message": "Thank you for completing the assessment! Your business health analysis has been generated."
     }
   },
   "pages": {

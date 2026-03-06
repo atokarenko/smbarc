@@ -43,7 +43,7 @@ const completionTexts = {
   en: {
     title: "Assessment Complete",
     message:
-      "Your AI maturity assessment is complete! Results have been generated and saved.",
+      "Your business health assessment is complete! Results have been generated and saved.",
     backToDashboard: "View Dashboard",
     nextSection: "Next Section",
     previousSection: "Previous Section",
@@ -54,7 +54,7 @@ const completionTexts = {
   ru: {
     title: "Оценка завершена",
     message:
-      "Ваша оценка AI-зрелости завершена! Результаты сгенерированы и сохранены.",
+      "Оценка здоровья вашего бизнеса завершена! Результаты сгенерированы и сохранены.",
     backToDashboard: "Перейти к панели",
     nextSection: "Следующий раздел",
     previousSection: "Предыдущий раздел",
