@@ -13,7 +13,7 @@ AI Architect delivers a self-serve AI assessment platform for SMB in four phases
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Platform Foundation** - Project skeleton with auth, i18n, AI provider abstraction, and demo profiles
-- [ ] **Phase 2: Assessment & AI Engine** - Hybrid business scan with AI follow-ups, maturity scoring, risk mapping, and ROI forecasting
+- [ ] **Phase 2: Assessment & AI Engine** - Business-first assessment rewrite: business questions, health scoring, AI prompts as business analyst, and full end-to-end wiring
 - [ ] **Phase 3: Dashboard & Reporting** - Visual dashboard with role-based views, charts, and PDF export
 - [ ] **Phase 4: Module Catalog** - Browsable AI module catalog with personalized recommendations from assessment results
 
@@ -36,21 +36,20 @@ Plans:
 - [x] 01-03-PLAN.md — App shell layout (sidebar, header, theme), all pages, dashboard with demo data
 
 ### Phase 2: Assessment & AI Engine
-**Goal**: User can complete a full business assessment (questionnaire + AI follow-ups) and receive AI-generated maturity score, automation roadmap, risk map, and ROI forecast
+**Goal**: User can complete a full business health assessment (questionnaire + AI follow-ups) and receive Business Health Score, automation roadmap, risk map, and ROI forecast
 **Depends on**: Phase 1
 **Requirements**: SCAN-01, SCAN-02, SCAN-03, SCAN-04, SCORE-01, SCORE-02, SCORE-03, SCORE-04, SCORE-05, SCORE-06
 **Success Criteria** (what must be TRUE):
-  1. User can complete a structured questionnaire covering business processes, current AI usage, risks, and strategy
-  2. AI generates contextual follow-up questions based on user answers, and the user can answer them
+  1. User can complete a structured questionnaire covering business operations, sales, finance, team, and risks
+  2. AI generates contextual follow-up questions based on user answers, acting as a business detective
   3. User can pause an in-progress assessment and resume from where they left off, with progress visibly tracked
-  4. After completing the assessment, user sees an AI Maturity Score with named levels and breakdown by dimensions (strategy, adoption, risk management, ROI tracking, governance)
+  4. After completing the assessment, user sees a Business Health Score with named levels (Critical/Struggling/Stable/Efficient/Optimized) and breakdown by 5 business dimensions
   5. After completing the assessment, user sees an automation roadmap, risk map, and ROI forecast -- all generated via AI with validated structured output
-**Plans**: 3 plans
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Assessment data foundation: Prisma model, types, questionnaire definitions, scoring formula, Zod schemas
-- [ ] 02-02-PLAN.md — Assessment questionnaire UI: multi-step form with stepper, auto-save, pause/resume, suggestion chips
-- [ ] 02-03-PLAN.md — AI integration: follow-up generation, scoring pipeline, processing screen, end-to-end wiring
+- [ ] 02-01-PLAN.md — Data layer atomic rewrite: dimension keys, business questions, health scoring levels, Zod schemas, demo data, and all tests
+- [ ] 02-02-PLAN.md — AI prompts rewrite (business detective/analyst framing) + i18n/UI text updates for business health language
 
 ### Phase 3: Dashboard & Reporting
 **Goal**: User sees a comprehensive dashboard presenting all assessment outputs with role-appropriate views, charts, and exportable reports
@@ -88,6 +87,6 @@ Phases execute in numeric order: 1 > 2 > 3 > 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Platform Foundation | 3/3 | Complete | 2026-03-05 |
-| 2. Assessment & AI Engine | 2/3 | In Progress|  |
+| 2. Assessment & AI Engine | 0/2 | In Progress|  |
 | 3. Dashboard & Reporting | 0/2 | Not started | - |
 | 4. Module Catalog | 0/1 | Not started | - |
