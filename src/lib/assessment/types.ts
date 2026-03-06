@@ -23,7 +23,7 @@ export const VALID_TRANSITIONS: Record<AssessmentStatus, AssessmentStatus[]> = {
   CREATED: ["IN_PROGRESS"],
   IN_PROGRESS: ["AI_FOLLOWUP", "CALCULATING"],
   AI_FOLLOWUP: ["IN_PROGRESS"],
-  CALCULATING: ["COMPLETE"],
+  CALCULATING: ["COMPLETE", "IN_PROGRESS"],
   COMPLETE: [],
 };
 
