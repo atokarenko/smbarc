@@ -3,9 +3,28 @@
 interface SuggestionChipsProps {
   suggestions: string[];
   onSelect: (suggestion: string) => void;
+  loading?: boolean;
 }
 
-export function SuggestionChips({ suggestions, onSelect }: SuggestionChipsProps) {
+export function SuggestionChips({
+  suggestions,
+  onSelect,
+  loading = false,
+}: SuggestionChipsProps) {
+  // Loading state: show skeleton chips
+  if (loading) {
+    return (
+      <div className="flex flex-wrap gap-2 mt-2">
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="inline-flex h-8 w-28 rounded-full bg-muted animate-pulse"
+          />
+        ))}
+      </div>
+    );
+  }
+
   if (suggestions.length === 0) return null;
 
   return (
