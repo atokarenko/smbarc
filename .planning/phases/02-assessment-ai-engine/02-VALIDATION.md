@@ -2,7 +2,7 @@
 phase: 2
 slug: assessment-ai-engine
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-03-06
 ---
@@ -36,22 +36,30 @@ created: 2026-03-06
 
 ## Per-Task Verification Map
 
-| Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
-|---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 02-01-01 | 01 | 1 | SCAN-01 | integration | `npx vitest run` | ❌ W0 | ⬜ pending |
-| 02-01-02 | 01 | 1 | SCAN-03, SCAN-04 | integration | `npx vitest run` | ❌ W0 | ⬜ pending |
-| 02-02-01 | 02 | 2 | SCAN-02 | integration | `npx vitest run` | ❌ W0 | ⬜ pending |
-| 02-02-02 | 02 | 2 | SCORE-01..06 | integration | `npx vitest run` | ❌ W0 | ⬜ pending |
+| Task ID | Plan | Wave | Requirement | Test Type | Automated Command | Status |
+|---------|------|------|-------------|-----------|-------------------|--------|
+| 02-01-01 | 01 | 1 | SCAN-01, SCAN-03 | unit | `npx tsc --noEmit` | pending |
+| 02-01-02 | 01 | 1 | SCAN-04, SCORE-01 | unit | `npx tsc --noEmit` | pending |
+| 02-01-03 | 01 | 1 | SCORE-02, SCORE-06 | unit | `npx vitest run --reporter=verbose` | pending |
+| 02-02-01 | 02 | 2 | SCAN-02, SCORE-03 | unit | `npx tsc --noEmit` | pending |
+| 02-02-02 | 02 | 2 | SCORE-04 | unit | `grep` (text verification) | pending |
+| 02-02-03 | 02 | 2 | SCORE-05 | unit | `npx tsc --noEmit` + `grep` | pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+*Status: pending / green / red / flaky*
 
 ---
 
-## Wave 0 Requirements
+## Task Details
 
-- [ ] `src/__tests__/assessment-flow.test.ts` — stub for questionnaire flow (SCAN-01, SCAN-03, SCAN-04)
-- [ ] `src/__tests__/ai-followup.test.ts` — stub for AI follow-up generation (SCAN-02)
-- [ ] `src/__tests__/scoring.test.ts` — stub for maturity scoring + structured output (SCORE-01..06)
+**Plan 01 — Data Layer Rewrite (Wave 1)**
+- 02-01-01: Atomic dimension rename across types, schemas, scoring, and demo-data
+- 02-01-02: Rewrite questions with business-focused content
+- 02-01-03: Update all test files for new content
+
+**Plan 02 — Prompts + UI Text (Wave 2, depends on Plan 01)**
+- 02-02-01: Complete rewrite of AI prompts for business-first framing
+- 02-02-02: Update i18n files and assessment-flow completion text
+- 02-02-03: Update processing screen and dashboard components
 
 ---
 
@@ -68,11 +76,11 @@ created: 2026-03-06
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify commands
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Task map matches actual plan structure (6 tasks: 3 in Plan 01, 3 in Plan 02)
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
 **Approval:** pending
