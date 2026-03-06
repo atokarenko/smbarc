@@ -28,7 +28,7 @@
 - [ ] **DASH-03**: User can view Risk Map with risk categories and severity levels
 - [ ] **DASH-04**: User can view ROI Forecast with charts showing savings projections
 - [x] **DASH-05**: Dashboard adapts to user role -- CEO sees strategic view, COO sees operational, CTO sees technical
-- [ ] **DASH-06**: User can export full assessment report as PDF
+- [x] **DASH-06**: User can export full assessment report as PDF
 
 ### Module Catalog
 
@@ -97,7 +97,7 @@
 | DASH-03 | Phase 3 | Pending |
 | DASH-04 | Phase 3 | Pending |
 | DASH-05 | Phase 3 | Complete |
-| DASH-06 | Phase 3 | Pending |
+| DASH-06 | Phase 3 | Complete |
 | MOD-01 | Phase 4 | Pending |
 | MOD-02 | Phase 4 | Pending |
 | MOD-03 | Phase 4 | Pending |
