@@ -80,28 +80,35 @@ function scoreOpenText(answer: string): number {
     score = 85;
   }
 
-  // Keyword bonus: domain-relevant terms suggest deeper understanding
+  // Keyword bonus: business-relevant terms suggest deeper understanding
   const keywords = [
-    "strategy",
-    "roadmap",
-    "kpi",
-    "metrics",
-    "automation",
-    "ai",
-    "machine learning",
-    "data",
-    "governance",
-    "compliance",
-    "roi",
-    "investment",
-    "risk",
-    "policy",
-    "framework",
-    "team",
+    "manual",
+    "bottleneck",
     "process",
-    "integration",
-    "deployment",
-    "monitoring",
+    "automate",
+    "automation",
+    "customer",
+    "revenue",
+    "cost",
+    "expense",
+    "invoice",
+    "employee",
+    "turnover",
+    "hiring",
+    "training",
+    "compliance",
+    "risk",
+    "deadline",
+    "inventory",
+    "hours",
+    "time",
+    "waste",
+    "inefficient",
+    "complaint",
+    "spreadsheet",
+    "report",
+    "pipeline",
+    "conversion",
   ];
 
   const lowerAnswer = trimmed.toLowerCase();
@@ -132,22 +139,22 @@ export function calculateOverallScore(
 }
 
 /**
- * Map a score (0-100) to a CMMI-inspired maturity level.
+ * Map a score (0-100) to a business health level.
  */
-export function getMaturityLevel(score: number): {
+export function getHealthLevel(score: number): {
   level: string;
   range: string;
 } {
   if (score <= 20) {
-    return { level: "Beginner", range: "0-20" };
+    return { level: "Critical", range: "0-20" };
   } else if (score <= 40) {
-    return { level: "Developing", range: "21-40" };
+    return { level: "Struggling", range: "21-40" };
   } else if (score <= 60) {
-    return { level: "Intermediate", range: "41-60" };
+    return { level: "Stable", range: "41-60" };
   } else if (score <= 80) {
-    return { level: "Advanced", range: "61-80" };
+    return { level: "Efficient", range: "61-80" };
   } else {
-    return { level: "Leader", range: "81-100" };
+    return { level: "Optimized", range: "81-100" };
   }
 }
 

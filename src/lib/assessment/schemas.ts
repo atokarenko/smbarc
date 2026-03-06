@@ -39,15 +39,13 @@ const roadmapItemSchema = z.object({
 
 export const scoreAndRoadmapSchema = z.object({
   maturityScore: z.object({
-    overall: z.number().describe("Overall maturity score 0-100"),
+    overall: z.number().describe("Overall business health score 0-100"),
     dimensions: z.object({
-      strategy: z.number().describe("Strategy dimension score 0-100"),
-      adoption: z.number().describe("Adoption dimension score 0-100"),
-      riskManagement: z
-        .number()
-        .describe("Risk Management dimension score 0-100"),
-      roiTracking: z.number().describe("ROI Tracking dimension score 0-100"),
-      governance: z.number().describe("Governance dimension score 0-100"),
+      operations: z.number().describe("Operations and Processes score 0-100"),
+      sales: z.number().describe("Sales and Customers score 0-100"),
+      finance: z.number().describe("Finance and Resources score 0-100"),
+      team: z.number().describe("Team and HR score 0-100"),
+      risks: z.number().describe("Risks and Compliance score 0-100"),
     }),
   }),
   automationRoadmap: z

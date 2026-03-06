@@ -40,7 +40,7 @@ export interface Question {
 export interface AssessmentSection {
   id: string;
   name: { en: string; ru: string };
-  dimension: "strategy" | "adoption" | "riskManagement" | "roiTracking" | "governance";
+  dimension: "operations" | "sales" | "finance" | "team" | "risks";
   questions: Question[];
 }
 

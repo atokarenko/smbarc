@@ -2,11 +2,11 @@
 export interface MaturityScore {
   overall: number;
   dimensions: {
-    strategy: number;
-    adoption: number;
-    riskManagement: number;
-    roiTracking: number;
-    governance: number;
+    operations: number;
+    sales: number;
+    finance: number;
+    team: number;
+    risks: number;
   };
 }
 
@@ -59,11 +59,11 @@ const retailFlowResults: AssessmentResults = {
   maturityScore: {
     overall: 25,
     dimensions: {
-      strategy: 20,
-      adoption: 15,
-      riskManagement: 30,
-      roiTracking: 25,
-      governance: 35,
+      operations: 20,
+      sales: 15,
+      finance: 30,
+      team: 25,
+      risks: 35,
     },
   },
   automationRoadmap: [
@@ -172,11 +172,11 @@ const finCoreResults: AssessmentResults = {
   maturityScore: {
     overall: 55,
     dimensions: {
-      strategy: 60,
-      adoption: 50,
-      riskManagement: 65,
-      roiTracking: 45,
-      governance: 55,
+      operations: 60,
+      sales: 50,
+      finance: 65,
+      team: 45,
+      risks: 55,
     },
   },
   automationRoadmap: [
@@ -285,11 +285,11 @@ const techManufactResults: AssessmentResults = {
   maturityScore: {
     overall: 78,
     dimensions: {
-      strategy: 85,
-      adoption: 75,
-      riskManagement: 80,
-      roiTracking: 70,
-      governance: 80,
+      operations: 85,
+      sales: 75,
+      finance: 80,
+      team: 70,
+      risks: 80,
     },
   },
   automationRoadmap: [
