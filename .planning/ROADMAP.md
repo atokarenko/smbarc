@@ -60,11 +60,12 @@ Plans:
   2. User can view automation roadmap as a visual timeline, risk map with severity levels, and ROI forecast with charts
   3. Dashboard content adapts to the user's role -- CEO sees strategic view, COO sees operational, CTO sees technical
   4. User can export a full assessment report as PDF
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Install deps (recharts, react-pdf), role-filter utility, enhance dashboard overview with radar chart and role-adapted layout
+- [ ] 03-02-PLAN.md — Build roadmap, risk map, and ROI forecast sub-pages with charts and role-aware sorting
+- [ ] 03-03-PLAN.md — PDF export: client-side report generation with @react-pdf/renderer
 
 ### Phase 4: Module Catalog
 **Goal**: User can browse AI modules and receive personalized recommendations based on their assessment results
@@ -88,5 +89,5 @@ Phases execute in numeric order: 1 > 2 > 3 > 4
 |-------|----------------|--------|-----------|
 | 1. Platform Foundation | 3/3 | Complete | 2026-03-05 |
 | 2. Assessment & AI Engine | 2/2 | Complete   | 2026-03-06 |
-| 3. Dashboard & Reporting | 0/2 | Not started | - |
+| 3. Dashboard & Reporting | 0/3 | Not started | - |
 | 4. Module Catalog | 0/1 | Not started | - |
