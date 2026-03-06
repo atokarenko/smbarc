@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-06T12:19:17Z"
-last_activity: 2026-03-06 -- Plan 02-02 executed (assessment questionnaire UI)
+stopped_at: Completed 02-01-PLAN.md (business-first rewrite)
+last_updated: "2026-03-06T14:41:05.559Z"
+last_activity: 2026-03-06 -- Plan 02-01 re-executed (business-first data layer rewrite)
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 5
+  total_plans: 5
+  completed_plans: 4
   percent: 83
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 2 of 4 (Assessment & AI Engine)
-Plan: 2 of 3 in current phase (02-02 complete)
+Plan: 3 of 3 in current phase (02-01 rewrite complete)
 Status: In progress
-Last activity: 2026-03-06 -- Plan 02-02 executed (assessment questionnaire UI)
+Last activity: 2026-03-06 -- Plan 02-01 re-executed (business-first data layer rewrite)
 
 Progress: [████████░░] 83% (overall)
 
@@ -51,6 +51,7 @@ Progress: [████████░░] 83% (overall)
 - Trend: stable
 
 *Updated after each plan completion*
+| Phase 02 P01 | 5min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -67,8 +68,10 @@ Recent decisions affecting current work:
 - [01-02]: Demo users created via signUp flow on first click rather than pre-hashed seed passwords
 - [01-03]: Dashboard splits into server page.tsx (data loading) + client dashboard-content.tsx (rendering) for SSG with dynamic data
 - [01-03]: Reusable PlaceholderPage component for all stub pages instead of duplicating coming-soon layout
-- [02-01]: 19 questions total (4 per section, 3 for ROI Tracking) -- conversational tone, mix of open-text and single-choice
-- [02-01]: Open-text scoring uses length baseline + keyword bonus heuristic; single-choice maps option index linearly
+- [02-01]: 19 questions total (4+4+3+4+4) across 5 business dimensions -- conversational tone, business pain focus
+- [02-01]: Dimension keys renamed: strategy->operations, adoption->sales, riskManagement->finance, roiTracking->team, governance->risks
+- [02-01]: Health levels: Critical/Struggling/Stable/Efficient/Optimized (replacing Beginner/Developing/Intermediate/Advanced/Leader)
+- [02-01]: Open-text scoring keywords updated to business terms (manual, bottleneck, invoice, etc.)
 - [02-01]: Re-export demo-data types from assessment/types.ts for single import source
 - [02-01]: Zod schemas mirror TypeScript interfaces exactly -- compile-time type safety verified in tests
 - [02-02]: User role read from User.role directly (no CompanyMember table); debounce 300ms for auto-save
@@ -86,6 +89,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-06T12:19:17Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-03-06T14:41:05.557Z
+Stopped at: Completed 02-01-PLAN.md (business-first rewrite)
 Resume file: None
