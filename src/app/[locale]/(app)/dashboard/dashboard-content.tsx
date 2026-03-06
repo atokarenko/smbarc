@@ -15,18 +15,16 @@ import {
   BarChart3,
   Target,
   Users,
-  Shield,
   DollarSign,
-  Scale,
 } from "lucide-react";
 import type { AssessmentResults } from "@/lib/demo-data";
 
-function getMaturityLevel(score: number): string {
-  if (score >= 80) return "leader";
-  if (score >= 60) return "advanced";
-  if (score >= 40) return "intermediate";
-  if (score >= 20) return "developing";
-  return "beginner";
+function getHealthLevel(score: number): string {
+  if (score >= 80) return "optimized";
+  if (score >= 60) return "efficient";
+  if (score >= 40) return "stable";
+  if (score >= 20) return "struggling";
+  return "critical";
 }
 
 function getScoreColor(score: number): string {
@@ -38,11 +36,11 @@ function getScoreColor(score: number): string {
 }
 
 const DIMENSION_ICONS = {
-  strategy: Target,
-  adoption: Users,
-  riskManagement: Shield,
-  roiTracking: DollarSign,
-  governance: Scale,
+  operations: Target,
+  sales: TrendingUp,
+  finance: DollarSign,
+  team: Users,
+  risks: ShieldAlert,
 } as const;
 
 interface DashboardContentProps {
@@ -69,7 +67,7 @@ export function DashboardContent({
   }
 
   const { maturityScore, automationRoadmap, riskMap, roiForecast } = assessmentResults;
-  const level = getMaturityLevel(maturityScore.overall);
+  const level = getHealthLevel(maturityScore.overall);
   const scoreColor = getScoreColor(maturityScore.overall);
 
   return (

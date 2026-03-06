@@ -9,18 +9,18 @@ interface ProcessingScreenProps {
 
 const MESSAGES = {
   en: [
-    "Analyzing your responses...",
-    "Calculating maturity score...",
-    "Generating automation roadmap...",
-    "Assessing risks...",
-    "Projecting ROI...",
+    "Analyzing your business...",
+    "Finding automation opportunities...",
+    "Calculating potential savings...",
+    "Mapping risk areas...",
+    "Building your action plan...",
   ],
   ru: [
-    "Анализируем ваши ответы...",
-    "Рассчитываем уровень зрелости...",
-    "Формируем дорожную карту автоматизации...",
-    "Оцениваем риски...",
-    "Прогнозируем ROI...",
+    "Анализируем ваш бизнес...",
+    "Ищем возможности для автоматизации...",
+    "Рассчитываем потенциальную экономию...",
+    "Составляем карту рисков...",
+    "Формируем план действий...",
   ],
 };
 
@@ -38,8 +38,8 @@ export function ProcessingScreen({ totalAnswers, locale }: ProcessingScreenProps
 
   const tagline =
     locale === "ru"
-      ? `Мы анализируем ${totalAnswers} ответов по 5 направлениям...`
-      : `We're analyzing ${totalAnswers} data points across 5 dimensions...`;
+      ? `Мы анализируем ${totalAnswers} ответов по 5 направлениям бизнеса...`
+      : `We're analyzing ${totalAnswers} answers across 5 business areas...`;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-8">
