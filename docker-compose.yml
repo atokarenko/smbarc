@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    ports:
+      - "7001:7001"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - AI_BASE_URL=http://host.docker.internal:3456/v1
+      - AI_API_KEY=not-needed-for-local-proxy
+      - AI_MODEL=claude-sonnet-4-20250514
+    volumes:
+      # Persist SQLite DB across restarts
+      - db-data:/app/prisma
+      # Hot-reload source in dev
+      - ./src:/app/src
+      - ./public:/app/public
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  db-data:
