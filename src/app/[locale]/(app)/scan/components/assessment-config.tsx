@@ -13,18 +13,18 @@ interface AssessmentConfigProps {
 
 const texts = {
   en: {
-    title: "AI Maturity Assessment",
+    title: "Business Health Assessment",
     subtitle:
-      "Answer questions across 5 dimensions to discover your company's AI readiness level. Takes about 5-7 minutes.",
+      "Answer questions across 5 business areas to discover your company's health and automation opportunities. Takes about 5-7 minutes.",
     aiDecideToggle: "AI Decides",
     aiDecideDescription:
       "Let AI decide how many follow-up questions to ask based on your answers. Default: 5-8 follow-ups.",
     begin: "Start Assessment",
   },
   ru: {
-    title: "Оценка зрелости ИИ",
+    title: "Оценка здоровья бизнеса",
     subtitle:
-      "Ответьте на вопросы по 5 направлениям, чтобы узнать уровень AI-готовности вашей компании. Займет около 5-7 минут.",
+      "Ответьте на вопросы по 5 направлениям бизнеса, чтобы узнать состояние здоровья и возможности автоматизации. Займёт около 5-7 минут.",
     aiDecideToggle: "ИИ решает",
     aiDecideDescription:
       "Позвольте ИИ решать, сколько уточняющих вопросов задать на основе ваших ответов. По умолчанию: 5-8 уточнений.",
