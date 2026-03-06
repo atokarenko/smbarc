@@ -24,9 +24,9 @@
 ### Dashboard
 
 - [x] **DASH-01**: User sees overview dashboard with Maturity Score, key metrics, and summary cards
-- [ ] **DASH-02**: User can view Automation Roadmap as visual timeline/priority list
-- [ ] **DASH-03**: User can view Risk Map with risk categories and severity levels
-- [ ] **DASH-04**: User can view ROI Forecast with charts showing savings projections
+- [x] **DASH-02**: User can view Automation Roadmap as visual timeline/priority list
+- [x] **DASH-03**: User can view Risk Map with risk categories and severity levels
+- [x] **DASH-04**: User can view ROI Forecast with charts showing savings projections
 - [x] **DASH-05**: Dashboard adapts to user role -- CEO sees strategic view, COO sees operational, CTO sees technical
 - [x] **DASH-06**: User can export full assessment report as PDF
 
@@ -93,9 +93,9 @@
 | SCORE-05 | Phase 2 | Complete |
 | SCORE-06 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Complete |
-| DASH-02 | Phase 3 | Pending |
-| DASH-03 | Phase 3 | Pending |
-| DASH-04 | Phase 3 | Pending |
+| DASH-02 | Phase 3 | Complete |
+| DASH-03 | Phase 3 | Complete |
+| DASH-04 | Phase 3 | Complete |
 | DASH-05 | Phase 3 | Complete |
 | DASH-06 | Phase 3 | Complete |
 | MOD-01 | Phase 4 | Pending |
