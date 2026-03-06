@@ -104,6 +104,35 @@
       "other": "Other"
     }
   },
+  "assessment": {
+    "start": {
+      "title": "AI Maturity Assessment",
+      "aiDecideToggle": "AI Decides",
+      "aiDecideDescription": "Let AI decide how many follow-up questions to ask based on your answers. Default: 5-8 follow-ups.",
+      "begin": "Start Assessment"
+    },
+    "stepper": {
+      "section": "Section",
+      "progress": "Progress"
+    },
+    "questions": {
+      "placeholder": "Tell us more...",
+      "next": "Next Section",
+      "back": "Previous Section",
+      "complete": "Complete Assessment"
+    },
+    "suggestions": {
+      "label": "Quick suggestions"
+    },
+    "resume": {
+      "title": "Resume Assessment",
+      "continue": "Continue where you left off"
+    },
+    "complete": {
+      "title": "Assessment Complete",
+      "message": "Thank you for completing the assessment! AI analysis will be available in a future update."
+    }
+  },
   "pages": {
     "comingSoon": "Coming soon"
   }
