@@ -79,7 +79,10 @@
     "viewRoadmap": "View Roadmap",
     "viewRisks": "View Risks",
     "viewRoi": "View ROI",
-    "roleView": "Viewing as {role}"
+    "roleView": "Viewing as {role}",
+    "exportPdf": "Export PDF",
+    "generatingPdf": "Generating...",
+    "reportTitle": "Business Health Report"
   },
   "settings": {
     "profile": "Profile",

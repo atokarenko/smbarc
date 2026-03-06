@@ -22,6 +22,7 @@ import {
 import type { AssessmentResults } from "@/lib/demo-data";
 import { HealthRadarChart } from "@/components/dashboard/health-radar-chart";
 import { getRoleConfig } from "@/components/dashboard/role-filter";
+import { PdfExportButton } from "@/components/dashboard/pdf-export-button";
 
 function getHealthLevel(score: number): string {
   if (score >= 80) return "optimized";
@@ -255,9 +256,19 @@ export function DashboardContent({
             <p className="text-sm text-muted-foreground">{companyName}</p>
           )}
         </div>
-        <span className="text-xs text-muted-foreground">
-          {t("dashboard.roleView", { role: t(`common.roles.${role}`) })}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-muted-foreground">
+            {t("dashboard.roleView", { role: t(`common.roles.${role}`) })}
+          </span>
+          {assessmentResults && (
+            <PdfExportButton
+              data={assessmentResults}
+              companyName={companyName || "Company"}
+              label={t("dashboard.exportPdf")}
+              loadingLabel={t("dashboard.generatingPdf")}
+            />
+          )}
+        </div>
       </div>
 
       {/* Render sections in role-determined order */}

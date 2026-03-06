@@ -79,7 +79,10 @@
     "viewRoadmap": "Посмотреть план",
     "viewRisks": "Посмотреть риски",
     "viewRoi": "Посмотреть ROI",
-    "roleView": "Просмотр как {role}"
+    "roleView": "Просмотр как {role}",
+    "exportPdf": "Экспорт PDF",
+    "generatingPdf": "Генерация...",
+    "reportTitle": "Отчёт о здоровье бизнеса"
   },
   "settings": {
     "profile": "Профиль",
