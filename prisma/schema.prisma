@@ -20,6 +20,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  assessments   Assessment[]
 }
 
 model Session {
@@ -72,4 +73,25 @@ model Company {
   assessmentResults String? // JSON string with full mock results for demo
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+}
+
+// Assessment model for AI maturity questionnaire
+model Assessment {
+  id                 String   @id @default(cuid())
+  userId             String
+  companyId          String?
+  status             String   @default("CREATED") // CREATED|IN_PROGRESS|AI_FOLLOWUP|CALCULATING|COMPLETE
+  currentSection     Int      @default(0)          // 0-4 for the 5 sections
+  aiDecideMode       Boolean  @default(false)      // "AI Decides" toggle for follow-ups
+  comprehensionLevel String?                       // beginner|intermediate|advanced -- detected by AI
+  answers            String?                       // JSON: { "s0_q0": "answer", ... }
+  followUpAnswers    String?                       // JSON: { "s0_f0": "answer", ... }
+  followUpQuestions  String?                       // JSON: stored AI-generated follow-up questions per section
+  formulaScores      String?                       // JSON: pre-calculated formula scores per dimension
+  results            String?                       // JSON: full AssessmentResults after completion
+  locale             String   @default("en")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
