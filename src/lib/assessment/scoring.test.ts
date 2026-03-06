@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   calculateDimensionScores,
   calculateOverallScore,
-  getMaturityLevel,
+  getHealthLevel,
   calculateProgress,
 } from "./scoring";
 import { ASSESSMENT_SECTIONS } from "./questions";
@@ -11,11 +11,11 @@ describe("calculateDimensionScores", () => {
   it("returns all 5 dimension keys", () => {
     const scores = calculateDimensionScores({}, ASSESSMENT_SECTIONS);
     const keys = Object.keys(scores);
-    expect(keys).toContain("strategy");
-    expect(keys).toContain("adoption");
-    expect(keys).toContain("riskManagement");
-    expect(keys).toContain("roiTracking");
-    expect(keys).toContain("governance");
+    expect(keys).toContain("operations");
+    expect(keys).toContain("sales");
+    expect(keys).toContain("finance");
+    expect(keys).toContain("team");
+    expect(keys).toContain("risks");
   });
 
   it("returns scores in 0-100 range", () => {
@@ -55,28 +55,28 @@ describe("calculateDimensionScores", () => {
   });
 
   it("single-choice answers apply weights correctly", () => {
-    // Answer only strategy section with highest choice
+    // Answer only operations section with highest choice
     const answers: Record<string, string> = {};
-    const strategySection = ASSESSMENT_SECTIONS[0];
-    for (const q of strategySection.questions) {
+    const operationsSection = ASSESSMENT_SECTIONS[0];
+    for (const q of operationsSection.questions) {
       if (q.type === "single-choice" && q.options) {
         answers[q.id] = String(q.options.length - 1); // highest option
       }
     }
     const scores = calculateDimensionScores(answers, ASSESSMENT_SECTIONS);
     // Strategy should have some score (not zero) because we answered choice questions
-    expect(scores.strategy).toBeGreaterThan(0);
+    expect(scores.operations).toBeGreaterThan(0);
   });
 });
 
 describe("calculateOverallScore", () => {
   it("averages dimension scores correctly", () => {
     const dimensions = {
-      strategy: 60,
-      adoption: 40,
-      riskManagement: 80,
-      roiTracking: 50,
-      governance: 70,
+      operations: 60,
+      sales: 40,
+      finance: 80,
+      team: 50,
+      risks: 70,
     };
     const overall = calculateOverallScore(dimensions);
     expect(overall).toBe(60); // (60+40+80+50+70)/5
@@ -84,55 +84,55 @@ describe("calculateOverallScore", () => {
 
   it("returns 0 for all-zero dimensions", () => {
     const dimensions = {
-      strategy: 0,
-      adoption: 0,
-      riskManagement: 0,
-      roiTracking: 0,
-      governance: 0,
+      operations: 0,
+      sales: 0,
+      finance: 0,
+      team: 0,
+      risks: 0,
     };
     expect(calculateOverallScore(dimensions)).toBe(0);
   });
 
   it("returns 100 for all-100 dimensions", () => {
     const dimensions = {
-      strategy: 100,
-      adoption: 100,
-      riskManagement: 100,
-      roiTracking: 100,
-      governance: 100,
+      operations: 100,
+      sales: 100,
+      finance: 100,
+      team: 100,
+      risks: 100,
     };
     expect(calculateOverallScore(dimensions)).toBe(100);
   });
 });
 
-describe("getMaturityLevel", () => {
+describe("getHealthLevel", () => {
   const testCases = [
-    { score: 0, level: "Beginner" },
-    { score: 10, level: "Beginner" },
-    { score: 20, level: "Beginner" },
-    { score: 21, level: "Developing" },
-    { score: 30, level: "Developing" },
-    { score: 40, level: "Developing" },
-    { score: 41, level: "Intermediate" },
-    { score: 50, level: "Intermediate" },
-    { score: 60, level: "Intermediate" },
-    { score: 61, level: "Advanced" },
-    { score: 70, level: "Advanced" },
-    { score: 80, level: "Advanced" },
-    { score: 81, level: "Leader" },
-    { score: 90, level: "Leader" },
-    { score: 100, level: "Leader" },
+    { score: 0, level: "Critical" },
+    { score: 10, level: "Critical" },
+    { score: 20, level: "Critical" },
+    { score: 21, level: "Struggling" },
+    { score: 30, level: "Struggling" },
+    { score: 40, level: "Struggling" },
+    { score: 41, level: "Stable" },
+    { score: 50, level: "Stable" },
+    { score: 60, level: "Stable" },
+    { score: 61, level: "Efficient" },
+    { score: 70, level: "Efficient" },
+    { score: 80, level: "Efficient" },
+    { score: 81, level: "Optimized" },
+    { score: 90, level: "Optimized" },
+    { score: 100, level: "Optimized" },
   ];
 
   for (const { score, level } of testCases) {
     it(`returns ${level} for score ${score}`, () => {
-      const result = getMaturityLevel(score);
+      const result = getHealthLevel(score);
       expect(result.level).toBe(level);
     });
   }
 
   it("includes range string in result", () => {
-    const result = getMaturityLevel(50);
+    const result = getHealthLevel(50);
     expect(result.range).toBeDefined();
     expect(typeof result.range).toBe("string");
     expect(result.range.length).toBeGreaterThan(0);

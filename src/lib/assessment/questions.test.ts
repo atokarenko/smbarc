@@ -14,11 +14,11 @@ describe("ASSESSMENT_SECTIONS", () => {
 
   it("covers all 5 dimensions", () => {
     const dimensions = ASSESSMENT_SECTIONS.map((s) => s.dimension);
-    expect(dimensions).toContain("strategy");
-    expect(dimensions).toContain("adoption");
-    expect(dimensions).toContain("riskManagement");
-    expect(dimensions).toContain("roiTracking");
-    expect(dimensions).toContain("governance");
+    expect(dimensions).toContain("operations");
+    expect(dimensions).toContain("sales");
+    expect(dimensions).toContain("finance");
+    expect(dimensions).toContain("team");
+    expect(dimensions).toContain("risks");
   });
 
   it("each section has 3-4 questions", () => {

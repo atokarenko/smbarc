@@ -64,11 +64,11 @@ describe("scoreAndRoadmapSchema", () => {
     maturityScore: {
       overall: 55,
       dimensions: {
-        strategy: 60,
-        adoption: 50,
-        riskManagement: 65,
-        roiTracking: 45,
-        governance: 55,
+        operations: 60,
+        sales: 50,
+        finance: 65,
+        team: 45,
+        risks: 55,
       },
     },
     automationRoadmap: [
@@ -93,11 +93,11 @@ describe("scoreAndRoadmapSchema", () => {
     if (result.success) {
       // Structural compatibility: check all dimension keys exist
       const dims = result.data.maturityScore.dimensions;
-      expect(dims).toHaveProperty("strategy");
-      expect(dims).toHaveProperty("adoption");
-      expect(dims).toHaveProperty("riskManagement");
-      expect(dims).toHaveProperty("roiTracking");
-      expect(dims).toHaveProperty("governance");
+      expect(dims).toHaveProperty("operations");
+      expect(dims).toHaveProperty("sales");
+      expect(dims).toHaveProperty("finance");
+      expect(dims).toHaveProperty("team");
+      expect(dims).toHaveProperty("risks");
       expect(typeof result.data.maturityScore.overall).toBe("number");
     }
   });
@@ -119,7 +119,7 @@ describe("scoreAndRoadmapSchema", () => {
     const invalid = {
       maturityScore: {
         overall: 50,
-        dimensions: { strategy: 60 }, // missing others
+        dimensions: { operations: 60 }, // missing others
       },
       automationRoadmap: [],
     };
@@ -222,11 +222,11 @@ describe("type compatibility", () => {
       maturityScore: {
         overall: 50,
         dimensions: {
-          strategy: 50,
-          adoption: 50,
-          riskManagement: 50,
-          roiTracking: 50,
-          governance: 50,
+          operations: 50,
+          sales: 50,
+          finance: 50,
+          team: 50,
+          risks: 50,
         },
       },
       automationRoadmap: [],
