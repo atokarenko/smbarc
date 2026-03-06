@@ -1,48 +1,53 @@
-# Phase 2: Assessment & AI Engine - Research
+# Phase 2: Assessment & AI Engine - Research (REVISED: Business-First Pivot)
 
-**Researched:** 2026-03-06
-**Domain:** Multi-step questionnaire with AI-powered follow-ups and structured output generation
+**Researched:** 2026-03-06 (revised)
+**Domain:** Business assessment rewrite -- content pivot from AI-maturity to business-problem discovery
 **Confidence:** HIGH
 
 ## Summary
 
-Phase 2 builds a hybrid business assessment flow: a structured 5-section questionnaire (15-20 questions) with AI-generated follow-up questions after each section, culminating in AI-generated results (Maturity Score, Automation Roadmap, Risk Map, ROI Forecast). The core technical challenges are: (1) a multi-step form with state machine management and auto-save, (2) AI calls using Vercel AI SDK v6 structured output with Zod v4 schemas, and (3) a Prisma schema extension for assessment persistence.
+Phase 2 is a CONTENT REWRITE of existing assessment infrastructure. The architecture (Prisma model, server actions, components, AI SDK integration) is already built and working from Plans 02-01 and 02-02. The pivot changes WHAT we ask and HOW we analyze -- not HOW the system works. The existing 5 AI-centric sections (Strategy, Adoption, Risk Management, ROI Tracking, Governance) must be replaced with 5 business-centric sections (Operations & Processes, Sales & Customers, Finance & Resources, Team & HR, Risks & Compliance). The scoring labels change from CMMI-inspired AI maturity levels (Beginner/Developing/Intermediate/Advanced/Leader) to Business Health levels (Critical/Struggling/Stable/Efficient/Optimized). All AI prompts must be rewritten to analyze business problems and recommend automation solutions rather than evaluate AI readiness.
 
-The existing codebase provides solid foundations: `getAIProvider()` returns an OpenAI-compatible model via `@ai-sdk/openai`, `AssessmentResults` types in `demo-data.ts` define the exact output contract, Prisma/SQLite is ready for schema extension, and shadcn/ui provides the component library. The AI SDK v6 has moved from `generateObject` to `generateText` + `Output.object()` -- this is the pattern to use.
+The key insight is that this is a surgical content replacement, not an architecture rebuild. The files that need rewriting are: `questions.ts` (new business questions), `types.ts` (new dimension names), `scoring.ts` (new level names + keyword list), `schemas.ts` (new dimension keys in Zod schemas), `prompts.ts` (complete rewrite for business analysis framing), `demo-data.ts` (new dimension keys in demo results), and i18n files (updated assessment strings). The UI component architecture (assessment-flow.tsx, actions.ts, all components/) stays the same -- only the content they render changes.
 
-**Primary recommendation:** Use `generateText` with `Output.object({ schema })` from AI SDK v6 for all structured AI calls. Build a state-machine-driven assessment flow with Prisma-backed persistence and server actions for mutations.
+**Primary recommendation:** Treat this as a coordinated find-and-replace across 7-8 files. Change dimension names everywhere simultaneously (types -> questions -> schemas -> scoring -> prompts -> demo-data -> i18n). Do NOT change the Prisma schema (JSON fields are schema-agnostic). Do NOT change the component architecture.
 
 <user_constraints>
 
 ## User Constraints (from CONTEXT.md)
 
 ### Locked Decisions
-- **Adaptive difficulty**: First 1-2 questions assess user's comprehension level. If user understands professional terms, questions use business/technical language. If not, questions are simplified to plain language. AI determines the level.
-- **5 sections matching maturity dimensions**: Strategy, Adoption, Risk Management, ROI Tracking, Governance
+- **Focus on business pain, not AI knowledge**: Questions ask about business processes, inefficiencies, manual work, bottlenecks, customer complaints, revenue leaks -- NOT about "AI strategy" or "AI governance"
+- **5 business-centric sections**:
+  1. **Operations & Processes** -- What manual/repetitive work consumes the most time? Where are bottlenecks? What breaks regularly?
+  2. **Sales & Customers** -- How do you find customers? Where do you lose them? What's your conversion pipeline? Customer complaints?
+  3. **Finance & Resources** -- Where do costs grow fastest? What reporting is manual? Cash flow pain points?
+  4. **Team & HR** -- Hiring bottlenecks? Employee turnover causes? Training gaps? Communication overhead?
+  5. **Risks & Compliance** -- What keeps you up at night? Legal/regulatory burden? Data security concerns? Single points of failure?
+- **Adaptive difficulty**: First questions assess user's business sophistication. Adjust language -- some owners think in spreadsheets, others in gut feelings. Both are valid.
 - **Hybrid presentation**: Groups of 3-4 related questions per screen
-- **Conversational text with AI suggestions**: Primary input is open-ended text fields, but with AI-generated suggestion chips (2-3 pre-filled answer variants) based on previous answers and detected user level
-- **15-20 questions total**: ~3-4 per dimension. Quick scan, ~5-7 minutes
-- **After each section**: AI generates 1-3 follow-up questions per section based on answers, before moving to next section
-- **5-8 follow-ups total** (default mode). Toggle switch at assessment start to enable "AI Decides" mode (unlimited follow-ups, AI stops when confident)
-- **Transparent**: Visual indicator showing "AI is asking based on your answers" -- distinct from structured questions
-- **Formula + AI enrichment**: Structured answers feed a weighted scoring formula across 5 dimensions. AI enriches with narrative descriptions, roadmap priorities, risk explanations, ROI reasoning
-- **5 CMMI-inspired levels**: Beginner (0-20), Developing (21-40), Intermediate (41-60), Advanced (61-80), Leader (81-100)
-- **Two AI calls**: Call 1: Score analysis + Automation Roadmap. Call 2: Risk Map + ROI Forecast
-- **Role shapes output**: AI prompt includes user's role (CEO/COO/CTO). Different narrative angle per role.
-- **Zod-validated structured output**: Both AI calls return Zod-validated JSON matching existing AssessmentResults types
-- **Free back-navigation**: User can jump to any completed section and modify answers. AI follow-ups for that section re-run on modification
-- **Section stepper progress**: Horizontal stepper showing all 5 dimensions, current section highlighted, completion percentage visible
-- **Processing screen on completion**: Animated "Analyzing your business..." screen (15-30 seconds) while AI calls run
-- **Auto-save every answer**: Each answer persisted to DB immediately. No explicit save button needed
-- **Assessment state machine**: CREATED -> IN_PROGRESS -> AI_FOLLOWUP -> CALCULATING -> COMPLETE
+- **Conversational text with AI suggestions**: Open-ended text fields with AI-generated suggestion chips based on industry and previous answers
+- **15-20 questions total**: ~3-4 per section. Quick scan, ~5-7 minutes
+- **Industry context matters**: Questions should adapt based on declared industry
+- **After each section**: AI generates 1-3 follow-up questions digging deeper into pain points
+- **5-8 follow-ups total** (default). Toggle for "Deep Analysis" mode (unlimited)
+- **Business Health Score** (not "AI Maturity Score"): 5 health levels: Critical (0-20), Struggling (21-40), Stable (41-60), Efficient (61-80), Optimized (81-100)
+- **Two AI calls**: Call 1: Business Health Score + Automation Roadmap. Call 2: Risk Map + ROI Forecast
+- **Role shapes output**: CEO gets "big picture", COO gets "what to fix Monday morning", CTO gets "what tools/systems to implement"
+- **Zod-validated structured output**: Both AI calls return validated JSON
+- **Free back-navigation**: User can jump to any completed section
+- **Section stepper progress**: Horizontal stepper showing 5 business sections
+- **Processing screen**: "Analyzing your business..." with specific messages
+- **Auto-save every answer**: Each answer persisted immediately
+- **State machine**: CREATED -> IN_PROGRESS -> AI_FOLLOWUP -> CALCULATING -> COMPLETE
 
 ### Claude's Discretion
-- Exact questionnaire questions and wording per dimension
-- AI prompt engineering for follow-up generation and scoring
-- Scoring formula weights per dimension
-- Processing screen animation and messaging details
-- Suggestion chip generation strategy
-- How comprehension level detection works (could be first question, could be continuous)
+- Exact question wording per section (must be plain business language, no jargon)
+- AI prompt engineering for follow-ups and scoring
+- Scoring formula weights
+- Processing screen animation details
+- How industry detection shapes question suggestions
+- Comprehension level detection approach
 
 ### Deferred Ideas (OUT OF SCOPE)
 None -- discussion stayed within phase scope
@@ -55,428 +60,415 @@ None -- discussion stayed within phase scope
 
 | ID | Description | Research Support |
 |----|-------------|-----------------|
-| SCAN-01 | User can complete structured questionnaire covering business processes, current AI usage, risks, and strategy | 5-section questionnaire design with 3-4 questions per section, Prisma Assessment model for persistence |
-| SCAN-02 | AI generates follow-up questions based on user's answers to dig deeper into specific areas | `generateText` + `Output.object()` call after each section to produce 1-3 follow-up questions |
-| SCAN-03 | User can pause assessment and resume from where they left off | Auto-save via server actions on every answer, assessment state machine in DB, resume from stored state |
-| SCAN-04 | Assessment progress is visible (progress bar, sections completed) | Horizontal section stepper component, completion percentage from stored answers vs total questions |
-| SCORE-01 | System generates AI Maturity Score with breakdown by dimensions | Formula-based scoring across 5 dimensions + AI narrative enrichment via structured output call |
-| SCORE-02 | Maturity Score is grounded in methodology with clear explanation of each level | 5 CMMI-inspired levels with score ranges, AI generates level explanations in structured output |
-| SCORE-03 | System generates Automation Roadmap | AI Call 1 output includes `RoadmapItem[]` matching existing `demo-data.ts` type |
-| SCORE-04 | System generates Risk Map | AI Call 2 output includes `RiskItem[]` matching existing `demo-data.ts` type |
-| SCORE-05 | System generates ROI Forecast with ranges and visible assumptions | AI Call 2 output includes `ROIForecast` matching existing `demo-data.ts` type |
-| SCORE-06 | All analysis outputs are generated via AI with Zod-validated structured output | `Output.object({ schema })` with Zod v4 schemas matching `AssessmentResults` interface |
+| SCAN-01 | User can complete structured questionnaire covering business processes, current AI usage, risks, and strategy | REWRITE: Replace 5 AI sections with 5 business sections in questions.ts, update dimension type union in types.ts |
+| SCAN-02 | AI generates follow-up questions based on user's answers to dig deeper into specific areas | REWRITE: prompts.ts follow-up prompt to ask about business pain points, not AI maturity gaps |
+| SCAN-03 | User can pause assessment and resume from where they left off | NO CHANGE: Existing auto-save + state machine architecture works as-is |
+| SCAN-04 | Assessment progress is visible (progress bar, sections completed) | MINOR: Update section names in stepper display (i18n strings) |
+| SCORE-01 | System generates Business Health Score with breakdown by dimensions | REWRITE: schemas.ts dimension keys from strategy/adoption/etc to operations/sales/finance/team/risks; scoring.ts level names from Beginner/etc to Critical/Struggling/Stable/Efficient/Optimized |
+| SCORE-02 | Health Score grounded in methodology with clear explanation of each level | REWRITE: Level descriptions must describe business health, not AI maturity |
+| SCORE-03 | System generates Automation Roadmap | REWRITE: prompts.ts to frame roadmap as "what business processes to automate" not "what AI to adopt" |
+| SCORE-04 | System generates Risk Map | REWRITE: prompts.ts to analyze business risks from answers, not generic AI risks |
+| SCORE-05 | System generates ROI Forecast with ranges and visible assumptions | REWRITE: prompts.ts to project savings from automating identified manual processes |
+| SCORE-06 | All analysis outputs via AI with Zod-validated structured output | UPDATE: schemas.ts dimension keys must match new business dimensions |
 
 </phase_requirements>
 
 ## Standard Stack
 
-### Core (Already Installed)
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| ai (Vercel AI SDK) | ^6.0.116 | Structured AI output generation | Already installed; `Output.object()` for Zod-validated responses |
-| @ai-sdk/openai | ^3.0.41 | OpenAI-compatible provider | Already installed; connects to claude-max-proxy |
-| zod | ^4.3.6 | Schema definition and validation | Already installed; Zod v4 works with AI SDK v6 `Output.object()` |
-| prisma / @prisma/client | ^6.19.2 | Database ORM | Already installed; extend schema for Assessment model |
-| next-intl | ^4.8.3 | i18n (EN/RU) | Already installed; all assessment UI must be bilingual |
-| shadcn/ui (radix-ui) | ^1.4.3 | UI components | Already installed; Card, Input, Button, Badge, etc. |
-
-### New Components Needed (via shadcn CLI)
-| Component | Purpose | When to Use |
-|-----------|---------|-------------|
-| Textarea | Open-ended answer input fields | Primary questionnaire input |
-| Progress | Progress bar for section completion | Assessment stepper progress indicator |
-| Tabs | Section switching (optional) | Alternative to custom stepper if simpler |
-| RadioGroup | Multiple choice sub-questions | Where structured options are needed |
-| Switch | "AI Decides" toggle | Assessment configuration toggle |
-| Label | Form field labels | Throughout questionnaire forms |
+### Core (Already Installed -- NO changes)
+| Library | Version | Purpose | Status |
+|---------|---------|---------|--------|
+| ai (Vercel AI SDK) | ^6.0.116 | Structured AI output via `Output.object()` | No change |
+| @ai-sdk/openai | ^3.0.41 | OpenAI-compatible provider (claude-max-proxy) | No change |
+| zod | ^4.3.6 | Schema definition and validation | Schemas need content update |
+| prisma / @prisma/client | ^6.19.2 | Database ORM | No schema change (JSON fields) |
+| next-intl | ^4.8.3 | i18n (EN/RU) | Assessment i18n keys need updating |
+| shadcn/ui (radix-ui) | various | UI components | No change |
 
 ### No New Dependencies Required
-The entire phase can be built with existing dependencies. No new npm packages needed.
-
-**Installation (shadcn components only):**
-```bash
-npx shadcn@latest add textarea progress radio-group switch label tabs
-```
+This is purely a content rewrite. No new packages, no new components.
 
 ## Architecture Patterns
 
-### Recommended Project Structure
+### What Changes vs What Stays
+
 ```
-src/
-├── app/[locale]/(app)/scan/
-│   ├── page.tsx                    # Server component: load assessment state
-│   ├── assessment-flow.tsx         # Client component: main assessment orchestrator
-│   ├── components/
-│   │   ├── section-stepper.tsx     # Horizontal stepper showing 5 sections
-│   │   ├── question-group.tsx      # Renders 3-4 questions for a section
-│   │   ├── ai-followup.tsx         # AI follow-up questions (distinct visual)
-│   │   ├── suggestion-chips.tsx    # AI-generated answer chips
-│   │   ├── processing-screen.tsx   # "Analyzing your business..." animation
-│   │   └── assessment-config.tsx   # Toggle for AI Decides mode
-│   └── actions.ts                  # Server actions for save/AI calls
-├── lib/
-│   ├── assessment/
-│   │   ├── questions.ts            # Static questionnaire definitions (EN/RU)
-│   │   ├── scoring.ts              # Formula-based scoring logic
-│   │   ├── schemas.ts              # Zod schemas for AI output validation
-│   │   ├── prompts.ts              # AI prompt templates
-│   │   └── types.ts                # Assessment-specific types
-│   └── ai/
-│       └── provider.ts             # Existing -- no changes needed
-├── messages/
-│   ├── en.json                     # Add assessment.* keys
-│   └── ru.json                     # Add assessment.* keys
-└── prisma/
-    └── schema.prisma               # Add Assessment model
+STAYS THE SAME (do NOT touch):
+├── prisma/schema.prisma          # Assessment model -- JSON fields are content-agnostic
+├── src/app/[locale]/(app)/scan/
+│   ├── page.tsx                   # Server component loader
+│   ├── assessment-flow.tsx        # Client orchestrator (references ASSESSMENT_SECTIONS)
+│   ├── actions.ts                 # Server actions (saveAnswer, generateFollowUpQuestions, completeAssessment)
+│   └── components/
+│       ├── section-stepper.tsx    # Renders section.name -- auto-updates with new data
+│       ├── question-group.tsx     # Renders question.text -- auto-updates with new data
+│       ├── ai-followup.tsx        # Unchanged
+│       ├── suggestion-chips.tsx   # Unchanged (static chips for now)
+│       ├── processing-screen.tsx  # Message text may want updating
+│       └── assessment-config.tsx  # "AI Decides" toggle -- unchanged
+
+MUST REWRITE (content changes):
+├── src/lib/assessment/
+│   ├── types.ts                   # dimension union type + re-exports
+│   ├── questions.ts               # All 5 sections + 15-20 questions
+│   ├── scoring.ts                 # Level names + keyword list
+│   ├── schemas.ts                 # Zod dimension keys
+│   └── prompts.ts                 # ALL three prompt builders
+├── src/lib/demo-data.ts           # Dimension keys in demo results
+├── src/messages/en.json           # Assessment UI strings
+└── src/messages/ru.json           # Assessment UI strings (Russian)
+
+MUST UPDATE (tests reflect new content):
+├── src/lib/assessment/questions.test.ts   # Dimension names, question counts
+├── src/lib/assessment/scoring.test.ts     # Level names, dimension keys
+└── src/lib/assessment/schemas.test.ts     # Dimension keys in validation data
 ```
 
-### Pattern 1: Server Actions for Mutations
-**What:** Use Next.js server actions for all data mutations (save answers, trigger AI calls)
-**When to use:** Every answer submission, AI follow-up generation, final scoring
-**Example:**
+### Pattern 1: Coordinated Dimension Rename
+
+**What:** The dimension names appear in 7+ files. All must change atomically.
+**Critical mapping:**
+
+| OLD dimension key | NEW dimension key | OLD section name | NEW section name |
+|---|---|---|---|
+| `strategy` | `operations` | AI Strategy | Operations & Processes |
+| `adoption` | `sales` | AI Adoption | Sales & Customers |
+| `riskManagement` | `finance` | Risk Management | Finance & Resources |
+| `roiTracking` | `team` | ROI Tracking | Team & HR |
+| `governance` | `risks` | AI Governance | Risks & Compliance |
+
+**Files that reference dimension keys:**
+1. `types.ts` -- `dimension` union type on `AssessmentSection`
+2. `questions.ts` -- each section's `dimension` field
+3. `schemas.ts` -- `scoreAndRoadmapSchema.maturityScore.dimensions` object keys
+4. `scoring.ts` -- keys in `calculateDimensionScores` output (auto from sections), keyword list
+5. `prompts.ts` -- dimension names in prompt text
+6. `demo-data.ts` -- `MaturityScore.dimensions` interface and all demo company data
+7. Test files -- test data using dimension keys
+
+### Pattern 2: Business-First Question Design
+
+**What:** Questions must feel like talking to a business consultant, not filling out a tech survey.
+**Design principles:**
+- Lead with pain: "What tasks eat up the most time in your team?" not "Rate your process automation maturity"
+- Use everyday language: "Where do you lose customers?" not "What is your customer churn attribution model?"
+- Mix open-text (for depth) with single-choice (for quick signals)
+- 3-4 questions per section, ~15-20 total
+- Each question bilingual (EN/RU) in the question data structure
+
+**Example question structure (Operations section):**
 ```typescript
-// src/app/[locale]/(app)/scan/actions.ts
-"use server";
-
-import { generateText, Output } from "ai";
-import { z } from "zod";
-import { getAIProvider } from "@/lib/ai/provider";
-import { prisma } from "@/lib/db/prisma";
-
-export async function saveAnswer(
-  assessmentId: string,
-  sectionIndex: number,
-  questionIndex: number,
-  answer: string
-) {
-  const assessment = await prisma.assessment.findUnique({
-    where: { id: assessmentId },
-  });
-  if (!assessment) throw new Error("Assessment not found");
-
-  const answers = JSON.parse(assessment.answers || "{}");
-  const key = `s${sectionIndex}_q${questionIndex}`;
-  answers[key] = answer;
-
-  await prisma.assessment.update({
-    where: { id: assessmentId },
-    data: {
-      answers: JSON.stringify(answers),
-      currentSection: sectionIndex,
-      updatedAt: new Date(),
-    },
-  });
+{
+  id: "ops_manual_tasks",
+  text: {
+    en: "What tasks or processes in your business are still done manually that you wish could be automated?",
+    ru: "Какие задачи или процессы в вашем бизнесе до сих пор делаются вручную, хотя вы хотели бы их автоматизировать?",
+  },
+  type: "open-text",
+  weight: 3,
 }
 ```
 
-### Pattern 2: AI Structured Output with Output.object()
-**What:** Use AI SDK v6 `generateText` + `Output.object()` for Zod-validated AI responses
-**When to use:** Follow-up question generation, scoring + roadmap, risk + ROI
-**Example:**
+### Pattern 3: AI as Business Analyst (Prompt Rewrite)
+
+**What:** AI prompts shift from "evaluate AI maturity" to "diagnose business problems and prescribe automation solutions."
+**Three prompt types need rewriting:**
+
+1. **Follow-up prompt** -- After each section, AI acts as a business detective:
+   - OLD: "probe deeper into AI maturity gaps"
+   - NEW: "dig into specific business pain points -- ask about frequency, cost, impact of problems mentioned"
+   - Industry context: "Based on the user's industry ({industry}), reference common benchmarks"
+
+2. **Score + Roadmap prompt** (AI Call 1) -- Business health diagnosis:
+   - OLD: "generate AI maturity score across 5 dimensions"
+   - NEW: "generate Business Health Score -- how efficiently is this business running? Where are the biggest automation opportunities?"
+   - Must frame dimensions as business health areas, not AI readiness
+   - Roadmap items: "Automate X -> save Y hours/week -> $Z/month"
+
+3. **Risk + ROI prompt** (AI Call 2) -- Business risk and savings:
+   - OLD: "AI adoption risks"
+   - NEW: "Business operational risks identified from answers + projected ROI from automating the specific processes the user described"
+   - Risks are business risks (cash flow, single points of failure, compliance gaps), not AI risks
+
+### Pattern 4: Scoring Level Rename
+
+**What:** Replace CMMI-inspired AI maturity levels with business health levels.
+
+| OLD Level | NEW Level | Range | Business Meaning |
+|-----------|-----------|-------|------------------|
+| Beginner | Critical | 0-20 | Business has severe inefficiencies, high risk of failure |
+| Developing | Struggling | 21-40 | Many manual processes, significant pain points |
+| Intermediate | Stable | 41-60 | Business runs but with notable inefficiencies |
+| Advanced | Efficient | 61-80 | Well-run business with optimization opportunities |
+| Leader | Optimized | 81-100 | Highly efficient, few automation gaps remain |
+
+### Pattern 5: Demo Data Update
+
+**What:** The 3 demo companies in `demo-data.ts` need dimension key updates.
+**Approach:** Keep the same companies/industries/scores -- just rename the dimension keys in the `MaturityScore.dimensions` object and update the `MaturityScore` interface.
+
 ```typescript
-// AI SDK v6 pattern for structured output
-import { generateText, Output } from "ai";
-import { z } from "zod";
-import { getAIProvider } from "@/lib/ai/provider";
-
-// Follow-up question generation
-const followUpSchema = z.object({
-  questions: z.array(z.object({
-    question: z.string(),
-    context: z.string(), // why AI is asking this
-    suggestedAnswers: z.array(z.string()), // 2-3 chips
-  })),
-  comprehensionLevel: z.enum(["beginner", "intermediate", "advanced"]),
-});
-
-export async function generateFollowUps(
-  sectionAnswers: Record<string, string>,
-  sectionName: string,
-  previousLevel: string | null,
-  role: string,
-  locale: string
-) {
-  const { output } = await generateText({
-    model: getAIProvider(),
-    output: Output.object({ schema: followUpSchema }),
-    system: `You are an AI business assessment assistant...`,
-    prompt: `Based on the user's answers for "${sectionName}" section...`,
-  });
-
-  return output; // Zod-validated, typed as z.infer<typeof followUpSchema>
-}
-```
-
-### Pattern 3: Assessment State Machine
-**What:** Database-backed state machine for assessment lifecycle
-**When to use:** Track assessment progress, enable pause/resume, manage transitions
-```typescript
-// Assessment states
-type AssessmentStatus =
-  | "CREATED"       // Assessment initialized, no answers
-  | "IN_PROGRESS"   // User is answering structured questions
-  | "AI_FOLLOWUP"   // Showing AI follow-up questions for current section
-  | "CALCULATING"   // Final AI scoring in progress
-  | "COMPLETE";     // Results generated and stored
-
-// State transitions
-const VALID_TRANSITIONS: Record<AssessmentStatus, AssessmentStatus[]> = {
-  CREATED: ["IN_PROGRESS"],
-  IN_PROGRESS: ["AI_FOLLOWUP", "CALCULATING"], // CALCULATING if last section
-  AI_FOLLOWUP: ["IN_PROGRESS"],                // Move to next section
-  CALCULATING: ["COMPLETE"],
-  COMPLETE: [],                                 // Terminal state
-};
-```
-
-### Pattern 4: Scoring Formula + AI Enrichment
-**What:** Deterministic formula for numeric scores, AI for narratives/recommendations
-**When to use:** Separating reliable scoring from AI creativity
-```typescript
-// Formula-based scoring (deterministic, no AI needed)
-function calculateDimensionScore(
-  sectionAnswers: Record<string, string>,
-  sectionWeights: Record<string, number>
-): number {
-  // Map qualitative answers to numeric values
-  // Apply weights per question
-  // Normalize to 0-100 scale
-  return normalizedScore;
+// OLD
+dimensions: {
+  strategy: 20,
+  adoption: 15,
+  riskManagement: 30,
+  roiTracking: 25,
+  governance: 35,
 }
 
-// AI enrichment (creative, adds value)
-// Score + Roadmap call receives the formula scores and raw answers
-// AI uses scores as ground truth, generates narrative and roadmap
+// NEW
+dimensions: {
+  operations: 20,
+  sales: 15,
+  finance: 30,
+  team: 25,
+  risks: 35,
+}
 ```
 
 ### Anti-Patterns to Avoid
-- **Single massive AI call:** Do NOT send all answers to one AI call. Split into follow-ups (per section) + two scoring calls (Score+Roadmap / Risk+ROI) as specified.
-- **Client-side AI calls:** All AI calls MUST go through server actions. Never expose AI provider to client.
-- **Storing answers in client state only:** Every answer must persist to DB immediately via server action. Client state is supplementary.
-- **Hardcoding questions in components:** Questions should be in a data structure (`questions.ts`), not scattered across JSX.
-- **Streaming for structured output:** The project uses full response mode (loading spinner then complete result). Do NOT use `streamText` for structured output -- use `generateText`.
+- **Changing Prisma schema:** The Assessment model stores answers/results as JSON strings. Dimension names are inside the JSON, not in the schema. No migration needed.
+- **Changing component architecture:** The UI components read from `ASSESSMENT_SECTIONS` data. Changing the data automatically changes what renders. Do not restructure components.
+- **Changing server actions:** `actions.ts` references `ASSESSMENT_SECTIONS` and calls prompt builders. The action logic is dimension-agnostic. Do not rewrite actions.
+- **Partial dimension rename:** If you rename `strategy` to `operations` in types.ts but not in schemas.ts, the Zod type inference will break. All files must change together.
+- **Deleting old assessment data:** Existing assessments in the DB may have old dimension keys. The code should handle this gracefully (old assessments show as-is, new ones use new keys).
 
 ## Don't Hand-Roll
 
 | Problem | Don't Build | Use Instead | Why |
 |---------|-------------|-------------|-----|
-| Structured AI output | Custom JSON parsing from text | `Output.object({ schema })` from AI SDK v6 | Handles retries, validation, type inference automatically |
-| Form state with auto-save | Custom useState + fetch calls | Server actions + Prisma + simple client state | Server actions give atomic saves, Prisma gives persistence |
-| Multi-step progress | Custom step tracking logic | Simple state derived from DB data (currentSection, answers count) | Assessment state is already in DB; derive UI from it |
-| Schema validation | Manual JSON.parse + checks | Zod v4 schemas (already installed) | Type-safe, composable, works with AI SDK |
-| i18n for questions | Custom translation logic | next-intl message keys | Already established pattern in the project |
-
-**Key insight:** The heaviest lift is prompt engineering, not infrastructure. The AI SDK, Prisma, and Next.js server actions handle the plumbing -- focus implementation effort on crafting good prompts and question design.
+| Dimension rename coordination | Manual search-and-replace | Single type definition in types.ts, let TypeScript compiler find all references | Compiler catches mismatches |
+| Question i18n | Separate translation files for questions | Inline `{ en, ru }` in question data (existing pattern) | Questions are data, not UI text |
+| Scoring formula rewrite | New scoring algorithm | Keep existing algorithm, just update keyword list and level names | Formula logic is content-agnostic |
+| Prompt templates | Inline strings in actions | Keep prompt builder functions in prompts.ts | Testable, reviewable, centralized |
 
 ## Common Pitfalls
 
-### Pitfall 1: AI Output Schema Mismatch with Demo Data Types
-**What goes wrong:** AI generates output that doesn't exactly match the `AssessmentResults` interface from `demo-data.ts`, causing runtime errors when dashboard tries to render.
-**Why it happens:** Zod schema for AI output is written separately from the existing types, leading to drift.
-**How to avoid:** Define Zod schemas that structurally mirror the existing TypeScript interfaces. Then use `z.infer<typeof schema>` as the canonical type. Consider replacing the manual interfaces in `demo-data.ts` with Zod-inferred types.
-**Warning signs:** Dashboard renders for demo data but crashes for real assessment data.
+### Pitfall 1: Incomplete Dimension Rename
+**What goes wrong:** TypeScript compiles but runtime breaks because one file still uses old dimension keys.
+**Why it happens:** The dimension keys appear as string literals in schemas.ts Zod definitions and as object keys in demo-data.ts -- these aren't caught by the type union change in types.ts.
+**How to avoid:** Start with types.ts dimension union. Then fix every TypeScript error. Then search for string literals "strategy", "adoption", "riskManagement", "roiTracking", "governance" across all files.
+**Warning signs:** Tests pass but AI output has wrong dimension keys; demo data shows `undefined` for dimension scores.
 
-### Pitfall 2: AI Call Timeout
-**What goes wrong:** AI structured output calls take too long (>30s), especially with complex schemas and large prompts.
-**Why it happens:** Two sequential AI calls + complex schemas + large answer payloads.
-**How to avoid:** Run the two scoring AI calls in parallel (`Promise.all`). Keep prompts focused. Set reasonable `maxTokens`. The processing screen gives 15-30s of UX cover.
-**Warning signs:** Processing screen shows for >30 seconds. Consider adding a timeout with graceful error.
+### Pitfall 2: Schema/Type Mismatch After Rename
+**What goes wrong:** The `AssessmentResults` type (re-exported from demo-data.ts via types.ts) has `MaturityScore.dimensions` with old keys, but schemas.ts Zod schema has new keys. The `z.infer` type doesn't match the TypeScript interface.
+**Why it happens:** Two separate definitions of the same shape -- TypeScript interface and Zod schema.
+**How to avoid:** Update `MaturityScore.dimensions` in demo-data.ts FIRST (it's the canonical type definition). Then update the Zod schema to match. Then verify schemas.test.ts type compatibility tests still compile.
+**Warning signs:** TypeScript errors in actions.ts where `scoreResult.output.maturityScore` is assigned to `results`.
 
-### Pitfall 3: SQLite JSON Field Limitations
-**What goes wrong:** Trying to query inside JSON fields in SQLite for assessment answers or results.
-**Why it happens:** SQLite's JSON support is limited compared to PostgreSQL. Prisma's JSON field in SQLite is stored as TEXT.
-**How to avoid:** Store answers as a JSON TEXT string but always load/parse the full object. Don't try to do partial JSON queries. Keep the Assessment model flat (status, currentSection as real columns).
-**Warning signs:** Complex Prisma `where` clauses on JSON fields that don't work.
+### Pitfall 3: Keyword List Not Updated for Business Context
+**What goes wrong:** Open-text scoring gives low scores because keyword bonus list still contains AI-specific terms.
+**Why it happens:** `scoring.ts` has a hardcoded keyword list including "ai", "machine learning", "governance", "deployment" -- these don't match business-pain language.
+**How to avoid:** Replace keyword list with business-relevant terms: "manual", "bottleneck", "customer", "revenue", "cost", "employee", "process", "inefficient", "hours", "complaints", "turnover", "invoice", "inventory", etc.
+**Warning signs:** Detailed business-focused answers still get low scores.
 
-### Pitfall 4: Back-Navigation Re-running AI Follow-ups
-**What goes wrong:** User goes back to modify Section 2 answers, but AI follow-ups don't re-generate, leaving stale follow-up answers.
-**Why it happens:** Follow-up answers from the old run are still stored.
-**How to avoid:** When a user modifies answers in a section, clear that section's follow-up answers and regenerate. Track which sections have been modified since last follow-up.
-**Warning signs:** AI follow-up answers reference questions that no longer exist.
+### Pitfall 4: Processing Screen Messages Still AI-Focused
+**What goes wrong:** User sees "Calculating AI maturity..." instead of "Analyzing your business..."
+**Why it happens:** Processing screen component has hardcoded messages.
+**How to avoid:** Update processing-screen.tsx messages and i18n keys to use business-focused language: "Finding automation opportunities...", "Calculating potential savings...", "Mapping risk areas..."
+**Warning signs:** UX disconnect -- business questions followed by AI-focused processing messages.
 
-### Pitfall 5: Zod v4 API Differences
-**What goes wrong:** Using Zod v3 patterns like `z.string().email()` or `.strict()` that have changed in v4.
-**Why it happens:** Most examples online still use Zod v3 syntax.
-**How to avoid:** Use Zod v4 patterns. For simple schemas (objects, strings, numbers, arrays, enums, literals), the API is identical. Avoid `.strict()` (use `z.strictObject()`), `.passthrough()` (use `z.looseObject()`). The `.describe()` method still works in Zod v4 and is important for AI context.
-**Warning signs:** Type errors or runtime errors from Zod schema definitions.
+### Pitfall 5: Test Data Using Old Dimension Keys
+**What goes wrong:** Tests fail after rename because test fixtures use `strategy`, `adoption`, etc.
+**Why it happens:** Test files have their own data objects with hardcoded dimension keys.
+**How to avoid:** Update ALL test files simultaneously with the main code changes.
+**Warning signs:** `vitest run` shows failures in schemas.test.ts and scoring.test.ts.
 
-### Pitfall 6: Locale-Aware AI Prompts
-**What goes wrong:** AI generates English responses when user is in Russian locale, or vice versa.
-**Why it happens:** Prompt doesn't include locale instruction.
-**How to avoid:** Include locale in AI system prompt: "Respond in {locale === 'ru' ? 'Russian' : 'English'}". Test with both locales. Note from STATE.md: "Russian-language AI output quality unknown -- consider English-only AI output for POC."
-**Warning signs:** Mixed language in assessment results.
+### Pitfall 6: i18n Keys for Dashboard Still Reference Old Names
+**What goes wrong:** Dashboard page (Phase 3) will try to render dimension names and find stale i18n keys.
+**Why it happens:** en.json/ru.json have `dimensions.strategy`, `dimensions.adoption`, etc.
+**How to avoid:** Update i18n dimension keys now. The dashboard isn't built yet, but demo data display may use these keys.
+**Warning signs:** Dashboard shows "undefined" for dimension labels when it gets built.
 
 ## Code Examples
 
-### AI Scoring Call (Call 1: Score + Roadmap)
+### New Dimension Type (types.ts change)
 ```typescript
-// Source: Verified with installed AI SDK v6 + Zod v4
-import { generateText, Output } from "ai";
-import { z } from "zod";
-import { getAIProvider } from "@/lib/ai/provider";
+// OLD
+export interface AssessmentSection {
+  id: string;
+  name: { en: string; ru: string };
+  dimension: "strategy" | "adoption" | "riskManagement" | "roiTracking" | "governance";
+  questions: Question[];
+}
 
-const roadmapItemSchema = z.object({
-  name: z.string().describe("Name of the automation initiative"),
-  description: z.string().describe("What to automate and why"),
-  priority: z.enum(["high", "medium", "low"]),
-  expectedImpact: z.string().describe("Expected business impact"),
-  timeline: z.string().describe("Implementation timeline estimate"),
-});
-
-const scoreAndRoadmapSchema = z.object({
-  maturityScore: z.object({
-    overall: z.number().describe("Overall maturity score 0-100"),
-    dimensions: z.object({
-      strategy: z.number().describe("Strategy dimension score 0-100"),
-      adoption: z.number().describe("Adoption dimension score 0-100"),
-      riskManagement: z.number().describe("Risk Management dimension score 0-100"),
-      roiTracking: z.number().describe("ROI Tracking dimension score 0-100"),
-      governance: z.number().describe("Governance dimension score 0-100"),
-    }),
-  }),
-  automationRoadmap: z.array(roadmapItemSchema)
-    .describe("3-5 prioritized automation recommendations"),
-});
-
-export async function generateScoreAndRoadmap(
-  allAnswers: Record<string, string>,
-  formulaScores: Record<string, number>, // pre-calculated by formula
-  role: string,
-  locale: string
-) {
-  const { output } = await generateText({
-    model: getAIProvider(),
-    output: Output.object({ schema: scoreAndRoadmapSchema }),
-    system: `You are an AI maturity assessment analyst. Analyze business assessment answers and generate a maturity score with automation roadmap.
-
-Role context: The user is a ${role}. ${role === "ceo" ? "Emphasize strategic impact and business value." : role === "coo" ? "Emphasize operational efficiency and process automation." : "Emphasize technical implementation and architecture."}
-
-Language: Respond entirely in ${locale === "ru" ? "Russian" : "English"}.
-
-The formula-based dimension scores are provided as guidelines. You may adjust them +/- 10 points based on qualitative analysis of the answers, but stay grounded in the data.`,
-    prompt: `Assessment answers:\n${JSON.stringify(allAnswers, null, 2)}\n\nFormula-based scores:\n${JSON.stringify(formulaScores, null, 2)}`,
-  });
-
-  return output;
+// NEW
+export interface AssessmentSection {
+  id: string;
+  name: { en: string; ru: string };
+  dimension: "operations" | "sales" | "finance" | "team" | "risks";
+  questions: Question[];
 }
 ```
 
-### AI Scoring Call (Call 2: Risk + ROI)
+### New Scoring Levels (scoring.ts change)
 ```typescript
-const riskItemSchema = z.object({
-  category: z.string().describe("Risk category name"),
-  level: z.enum(["high", "medium", "low"]),
-  description: z.string().describe("Risk description"),
-  mitigation: z.string().describe("Mitigation strategy"),
-});
-
-const roiItemSchema = z.object({
-  area: z.string().describe("Business area"),
-  currentCost: z.number().describe("Estimated current annual cost"),
-  projectedSaving: z.number().describe("Projected annual saving with AI"),
-  confidence: z.enum(["high", "medium", "low"]),
-});
-
-const riskAndRoiSchema = z.object({
-  riskMap: z.array(riskItemSchema)
-    .describe("3-5 risks covering legal, financial, reputational, operational, and data categories"),
-  roiForecast: z.object({
-    totalSavings: z.number().describe("Total projected annual savings"),
-    timeframe: z.string().describe("Forecast timeframe"),
-    items: z.array(roiItemSchema).describe("3-5 ROI areas with savings projections"),
-  }),
-});
-```
-
-### Prisma Schema Extension
-```prisma
-model Assessment {
-  id              String   @id @default(cuid())
-  userId          String
-  companyId       String?
-  status          String   @default("CREATED") // CREATED|IN_PROGRESS|AI_FOLLOWUP|CALCULATING|COMPLETE
-  currentSection  Int      @default(0)         // 0-4 for the 5 sections
-  aiDecideMode    Boolean  @default(false)      // "AI Decides" toggle
-  comprehensionLevel String? // beginner|intermediate|advanced -- detected by AI
-  answers         String?  // JSON: { "s0_q0": "answer", "s0_q1": "answer", ... }
-  followUpAnswers String?  // JSON: { "s0_f0": "answer", ... }
-  followUpQuestions String? // JSON: stored AI-generated follow-up questions per section
-  formulaScores   String?  // JSON: pre-calculated formula scores per dimension
-  results         String?  // JSON: full AssessmentResults after completion
-  locale          String   @default("en")
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// OLD
+export function getMaturityLevel(score: number) {
+  if (score <= 20) return { level: "Beginner", range: "0-20" };
+  else if (score <= 40) return { level: "Developing", range: "21-40" };
+  // ...
 }
 
-// Add to User model:
-// assessments Assessment[]
+// NEW
+export function getHealthLevel(score: number) {
+  if (score <= 20) return { level: "Critical", range: "0-20" };
+  else if (score <= 40) return { level: "Struggling", range: "21-40" };
+  else if (score <= 60) return { level: "Stable", range: "41-60" };
+  else if (score <= 80) return { level: "Efficient", range: "61-80" };
+  else return { level: "Optimized", range: "81-100" };
+}
 ```
 
-### Server Action: Auto-Save Pattern
+### New Schema Dimensions (schemas.ts change)
 ```typescript
-"use server";
+// OLD
+dimensions: z.object({
+  strategy: z.number(),
+  adoption: z.number(),
+  riskManagement: z.number(),
+  roiTracking: z.number(),
+  governance: z.number(),
+}),
 
-import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/db/prisma";
+// NEW
+dimensions: z.object({
+  operations: z.number().describe("Operations & Processes score 0-100"),
+  sales: z.number().describe("Sales & Customers score 0-100"),
+  finance: z.number().describe("Finance & Resources score 0-100"),
+  team: z.number().describe("Team & HR score 0-100"),
+  risks: z.number().describe("Risks & Compliance score 0-100"),
+}),
+```
 
-export async function saveAndContinue(
-  assessmentId: string,
-  sectionIndex: number,
-  questionKey: string,
-  answer: string
-) {
-  const assessment = await prisma.assessment.findUniqueOrThrow({
-    where: { id: assessmentId },
-  });
+### New Business Keywords (scoring.ts change)
+```typescript
+// OLD keywords (AI-focused)
+const keywords = ["strategy", "roadmap", "kpi", "ai", "machine learning", "governance", ...];
 
-  const answers = JSON.parse(assessment.answers || "{}");
-  answers[questionKey] = answer;
+// NEW keywords (business-focused)
+const keywords = [
+  "manual", "bottleneck", "process", "automate", "automation",
+  "customer", "revenue", "cost", "expense", "invoice",
+  "employee", "turnover", "hiring", "training",
+  "compliance", "risk", "deadline", "inventory",
+  "hours", "time", "waste", "inefficient", "complaint",
+  "spreadsheet", "report", "pipeline", "conversion",
+];
+```
 
-  await prisma.assessment.update({
-    where: { id: assessmentId },
-    data: {
-      answers: JSON.stringify(answers),
-      currentSection: sectionIndex,
-      status: "IN_PROGRESS",
-    },
-  });
-
-  // No revalidatePath needed -- client manages its own state
-  // DB is source of truth for resume
+### New MaturityScore Interface (demo-data.ts change)
+```typescript
+// OLD
+export interface MaturityScore {
+  overall: number;
+  dimensions: {
+    strategy: number;
+    adoption: number;
+    riskManagement: number;
+    roiTracking: number;
+    governance: number;
+  };
 }
+
+// NEW
+export interface MaturityScore {
+  overall: number;
+  dimensions: {
+    operations: number;
+    sales: number;
+    finance: number;
+    team: number;
+    risks: number;
+  };
+}
+```
+
+### Follow-Up Prompt Rewrite Example (prompts.ts)
+```typescript
+// NEW system prompt for follow-ups
+const system = `You are a sharp business consultant conducting a diagnostic interview.
+Your job is to identify where this business is bleeding money, wasting time, or at risk.
+
+Based on the user's answers for the "${sectionName}" section, generate 1-3 follow-up
+questions that dig deeper into the specific problems they described.
+
+${roleCtx}
+${langInstr}
+
+Guidelines:
+- Be a business detective: if they say "we lose customers," ask "At what stage?
+  How many per month? What do they say when leaving?"
+- Reference industry norms when relevant: "Typical for ${industry}: 15-20% cart abandonment"
+- Keep language plain and conversational -- no jargon
+- Each question should make the user think "Yes, that's exactly what I need to figure out"
+- Suggestion chips should be common answers for their industry
+
+Comprehension level: ${previousLevel ? `Previously "${previousLevel}". Adjust if their language changed.` : "Detect from answers: 'beginner' (gut feelings, simple language), 'intermediate' (knows numbers, uses some business terms), 'advanced' (thinks in metrics, processes, systems)."}`;
+```
+
+### Score & Roadmap Prompt Rewrite Example (prompts.ts)
+```typescript
+// NEW system prompt for Business Health Score + Automation Roadmap
+const system = `You are a business efficiency analyst. Analyze assessment answers to determine
+how well this business is running and where automation would have the biggest impact.
+
+${roleCtx}
+${langInstr}
+
+Business Health Score guidelines:
+- Score 5 dimensions (operations, sales, finance, team, risks) from 0-100
+- Higher score = more efficient/optimized business
+- Base your scores on evidence from answers: manual processes, bottlenecks, complaints, waste
+- Formula scores are provided as baseline -- adjust +/- 10 based on qualitative analysis
+
+Automation Roadmap guidelines:
+- Generate 3-5 automation recommendations based on the SPECIFIC problems described
+- Each item: what to automate, expected time/money saved, priority, timeline
+- Be concrete: "Automate invoice processing -> save 15 hours/week -> ~$2,400/month"
+- Prioritize by: quick wins first (high priority), then larger transformations
+- Frame in terms the user's role cares about (CEO: revenue impact, COO: hours saved, CTO: tools needed)`;
 ```
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| `generateObject()` | `generateText()` + `Output.object()` | AI SDK v6 (2025) | Old still works but deprecated; use new pattern |
-| Zod v3 `z.string().email()` | Zod v4 `z.email()` | Zod v4 (2025) | Only affects string format validators; basic schemas unchanged |
-| `zodSchema()` wrapper | Direct Zod schema in `Output.object()` | AI SDK v6 | No wrapper needed; pass schema directly |
-| Client-side API calls | Server actions | Next.js 14+ (stable) | Better security, simpler auth, atomic operations |
+| Old Approach (current code) | New Approach (pivot) | Impact |
+|---|---|---|
+| AI Maturity assessment | Business Health assessment | All questions, prompts, scoring labels change |
+| CMMI-inspired levels | Business health levels | Level names and descriptions change |
+| "How mature is your AI?" | "Where is your business bleeding?" | Complete tone/framing shift |
+| AI adoption risks | Business operational risks | Risk analysis framing changes |
+| AI strategy roadmap | Business automation roadmap | Roadmap framing changes |
 
-**Deprecated/outdated:**
-- `generateObject`: Still works in AI SDK v6 but deprecated. Use `generateText` + `Output.object()`.
-- `streamObject`: Deprecated. Use `streamText` + `Output.object()` (but this project uses full response mode, not streaming).
+**Not changing:**
+- AI SDK usage pattern (`generateText` + `Output.object()`)
+- Prisma Assessment model (JSON fields are content-agnostic)
+- Component architecture (data-driven rendering)
+- Server action pattern
+- State machine (same 5 states)
 
 ## Open Questions
 
-1. **Russian AI output quality**
-   - What we know: STATE.md flags "Russian-language AI output quality unknown"
-   - What's unclear: Whether claude-sonnet-4 via claude-max-proxy produces quality Russian text for structured business content
-   - Recommendation: Include locale in prompts. If Russian quality is poor, consider AI output always in English with UI labels in Russian. Test during implementation.
+1. **Industry field in User/Assessment**
+   - What we know: CONTEXT.md says "Industry context matters" and questions should adapt based on industry
+   - What's unclear: Where is industry stored? The User model has `role` but not `industry`. The Assessment model doesn't have it either.
+   - Recommendation: Add industry as a question in the first section (Operations), or as a pre-assessment selector. Store in Assessment model as a new field, OR extract from first answer. For the rewrite, prompts can reference industry from answers rather than a dedicated field.
 
-2. **AI call latency with claude-max-proxy**
-   - What we know: Health check works, but structured output calls with long prompts may take significantly longer
-   - What's unclear: Actual latency for the two scoring calls with full answer payloads
-   - Recommendation: Run both scoring calls in parallel. Processing screen provides 15-30s UX cover. Add timeout handling.
+2. **How to handle existing assessments with old dimension keys**
+   - What we know: Completed assessments in the DB have `strategy`, `adoption`, etc. in their JSON results
+   - What's unclear: Whether to migrate or leave them
+   - Recommendation: Leave them. Old assessments were likely test data. New assessments will use new keys. If needed, a simple migration script can rename keys in JSON strings.
 
-3. **Comprehension level detection strategy**
-   - What we know: User decision says "first 1-2 questions assess level, AI determines"
-   - What's unclear: Whether to use a dedicated AI call for level detection or fold it into the first section's follow-up generation
-   - Recommendation: Fold into first follow-up call. After section 1 answers, the follow-up generation call also returns `comprehensionLevel`. This avoids an extra AI call.
+3. **Processing screen messages**
+   - What we know: Current messages may reference AI maturity
+   - What's unclear: Exact current messages in processing-screen.tsx
+   - Recommendation: Update to business-focused messages: "Analyzing your business...", "Finding automation opportunities...", "Calculating potential savings...", "Mapping risk areas..."
+
+4. **Russian AI output quality**
+   - What we know: STATE.md flags this as unknown
+   - What's unclear: Quality of business-focused Russian output from Claude
+   - Recommendation: Same as before -- include locale in prompts, test with both. Business language may actually be easier for AI in Russian than technical AI terminology.
 
 ## Validation Architecture
 
@@ -491,16 +483,16 @@ export async function saveAndContinue(
 ### Phase Requirements to Test Map
 | Req ID | Behavior | Test Type | Automated Command | File Exists? |
 |--------|----------|-----------|-------------------|-------------|
-| SCAN-01 | Questionnaire questions exist for all 5 sections | unit | `npx vitest run src/lib/assessment/questions.test.ts -t "questions" --reporter=verbose` | No -- Wave 0 |
-| SCAN-02 | AI follow-up schema validates correctly | unit | `npx vitest run src/lib/assessment/schemas.test.ts -t "followUp" --reporter=verbose` | No -- Wave 0 |
-| SCAN-03 | Assessment state persists and resumes | unit | `npx vitest run src/lib/assessment/scoring.test.ts -t "resume" --reporter=verbose` | No -- Wave 0 |
-| SCAN-04 | Progress calculation from answers | unit | `npx vitest run src/lib/assessment/scoring.test.ts -t "progress" --reporter=verbose` | No -- Wave 0 |
-| SCORE-01 | Formula scoring produces valid 0-100 scores per dimension | unit | `npx vitest run src/lib/assessment/scoring.test.ts -t "scoring" --reporter=verbose` | No -- Wave 0 |
-| SCORE-02 | CMMI level assignment from scores | unit | `npx vitest run src/lib/assessment/scoring.test.ts -t "cmmi" --reporter=verbose` | No -- Wave 0 |
-| SCORE-03 | Score+Roadmap schema matches AssessmentResults types | unit | `npx vitest run src/lib/assessment/schemas.test.ts -t "scoreRoadmap" --reporter=verbose` | No -- Wave 0 |
-| SCORE-04 | Risk schema matches RiskItem type | unit | `npx vitest run src/lib/assessment/schemas.test.ts -t "riskMap" --reporter=verbose` | No -- Wave 0 |
-| SCORE-05 | ROI schema matches ROIForecast type | unit | `npx vitest run src/lib/assessment/schemas.test.ts -t "roiForecast" --reporter=verbose` | No -- Wave 0 |
-| SCORE-06 | Output.object() works with defined schemas | unit | `npx vitest run src/lib/assessment/schemas.test.ts -t "outputObject" --reporter=verbose` | No -- Wave 0 |
+| SCAN-01 | New business questions exist for all 5 sections | unit | `npx vitest run src/lib/assessment/questions.test.ts --reporter=verbose` | YES -- needs updating |
+| SCAN-02 | Follow-up schema validates correctly | unit | `npx vitest run src/lib/assessment/schemas.test.ts --reporter=verbose` | YES -- needs updating |
+| SCAN-03 | Assessment state persists and resumes | unit | `npx vitest run src/lib/assessment/scoring.test.ts --reporter=verbose` | YES -- no change needed |
+| SCAN-04 | Progress calculation from answers | unit | `npx vitest run src/lib/assessment/scoring.test.ts --reporter=verbose` | YES -- no change needed |
+| SCORE-01 | Formula scoring produces valid 0-100 scores per dimension | unit | `npx vitest run src/lib/assessment/scoring.test.ts --reporter=verbose` | YES -- dimension keys update |
+| SCORE-02 | Business health level assignment from scores | unit | `npx vitest run src/lib/assessment/scoring.test.ts --reporter=verbose` | YES -- level names update |
+| SCORE-03 | Score+Roadmap schema matches new dimension keys | unit | `npx vitest run src/lib/assessment/schemas.test.ts --reporter=verbose` | YES -- dimension keys update |
+| SCORE-04 | Risk schema matches RiskItem type | unit | `npx vitest run src/lib/assessment/schemas.test.ts --reporter=verbose` | YES -- no change |
+| SCORE-05 | ROI schema matches ROIForecast type | unit | `npx vitest run src/lib/assessment/schemas.test.ts --reporter=verbose` | YES -- no change |
+| SCORE-06 | Schemas work with Output.object() | unit | `npx vitest run src/lib/assessment/schemas.test.ts --reporter=verbose` | YES -- dimension keys update |
 
 ### Sampling Rate
 - **Per task commit:** `npx vitest run --reporter=verbose`
@@ -508,34 +500,87 @@ export async function saveAndContinue(
 - **Phase gate:** Full suite green before `/gsd:verify-work`
 
 ### Wave 0 Gaps
-- [ ] `src/lib/assessment/questions.test.ts` -- covers SCAN-01 (question structure validation)
-- [ ] `src/lib/assessment/schemas.test.ts` -- covers SCAN-02, SCORE-03, SCORE-04, SCORE-05, SCORE-06 (Zod schema validation)
-- [ ] `src/lib/assessment/scoring.test.ts` -- covers SCAN-03, SCAN-04, SCORE-01, SCORE-02 (formula scoring, progress, state)
+None -- existing test infrastructure covers all phase requirements. Tests need content updates (dimension keys, level names) but no new test files are needed.
+
+## Detailed File Change Map
+
+This is the authoritative reference for what changes in each file:
+
+### 1. `src/lib/demo-data.ts`
+- `MaturityScore.dimensions` interface: rename 5 keys
+- All 3 demo company `dimensions` objects: rename keys
+- Keep score values the same
+
+### 2. `src/lib/assessment/types.ts`
+- `AssessmentSection.dimension` union: `"operations" | "sales" | "finance" | "team" | "risks"`
+- Re-exports from demo-data.ts remain unchanged (types are structural)
+
+### 3. `src/lib/assessment/questions.ts`
+- Replace ALL 5 sections with new business-focused sections
+- New section IDs: "operations", "sales", "finance", "team-hr", "risks-compliance"
+- New dimension values: "operations", "sales", "finance", "team", "risks"
+- New question IDs, text (EN/RU), types, weights
+- Keep helper functions (getQuestionsForSection, getTotalQuestionCount)
+
+### 4. `src/lib/assessment/scoring.ts`
+- `getMaturityLevel` -> `getHealthLevel` (rename function + update levels)
+- Update keyword list to business-focused terms
+- `calculateDimensionScores` -- no logic change (reads from sections data)
+- `calculateOverallScore` -- no change
+- `calculateProgress` -- no change
+
+### 5. `src/lib/assessment/schemas.ts`
+- `scoreAndRoadmapSchema.maturityScore.dimensions` -- rename 5 keys
+- Update `.describe()` strings to reference business health
+- `followUpSchema` -- update describe strings (optional)
+- `riskAndRoiSchema` -- no structural change (risk/ROI types stay same)
+
+### 6. `src/lib/assessment/prompts.ts`
+- COMPLETE REWRITE of all 3 prompt builders
+- `buildFollowUpPrompt` -- business detective framing
+- `buildScoreAndRoadmapPrompt` -- business health analyst framing
+- `buildRiskAndRoiPrompt` -- business risk/ROI analyst framing
+- Keep function signatures the same
+- Keep ROLE_CONTEXT structure, update text for business framing
+
+### 7. `src/messages/en.json` + `src/messages/ru.json`
+- Update `assessment.start.title`: "Business Health Assessment"
+- Update dimension names under dashboard keys
+- Update any references to "AI Maturity" -> "Business Health"
+- Update `assessment.complete.message`
+
+### 8. Test files (3 files)
+- `questions.test.ts` -- update dimension names in assertions
+- `scoring.test.ts` -- update dimension keys in test data, level name assertions
+- `schemas.test.ts` -- update dimension keys in test data objects
+
+### 9. `src/app/[locale]/(app)/scan/components/processing-screen.tsx`
+- Update processing messages to business-focused text (if hardcoded)
+
+### 10. `src/app/[locale]/(app)/scan/assessment-flow.tsx`
+- Update completion message text (if hardcoded, not from i18n)
+- Line 47: "Your AI maturity assessment is complete!" -> "Your business health assessment is complete!"
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- Installed `ai@6.0.116` package -- verified `Output.object()`, `generateText()` exports exist and work with Zod v4
-- Installed `zod@4.3.6` -- verified schema creation works with AI SDK Output.object()
-- Existing codebase: `src/lib/ai/provider.ts`, `src/lib/demo-data.ts` -- verified exact types and patterns
-- [AI SDK v6 Migration Guide](https://ai-sdk.dev/docs/migration-guides/migration-guide-6-0) -- generateObject to generateText migration
-- [AI SDK Structured Data Docs](https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data) -- Output.object pattern
+- Existing codebase analysis -- all files read and understood in full
+- CONTEXT.md -- locked decisions from user discussion
+- REQUIREMENTS.md -- phase requirement IDs
 
 ### Secondary (MEDIUM confidence)
-- [AI SDK generateObject Reference](https://ai-sdk.dev/docs/reference/ai-sdk-core/generate-object) -- deprecated but documented
-- [Zod v4 Migration Guide](https://zod.dev/v4/changelog) -- breaking changes from v3
+- AI SDK v6 patterns verified in existing working code (actions.ts already uses `generateText` + `Output.object()`)
 
 ### Tertiary (LOW confidence)
-- Russian AI output quality -- flagged in STATE.md as unknown, no verification available
-- AI call latency through claude-max-proxy for structured output -- untested
+- Russian AI output quality -- still unknown, flagged in STATE.md
 
 ## Metadata
 
 **Confidence breakdown:**
-- Standard stack: HIGH - all libraries already installed, verified working together
-- Architecture: HIGH - patterns follow established Next.js App Router + AI SDK conventions
-- Pitfalls: HIGH - identified from real codebase constraints (SQLite, Zod v4, locale)
-- AI structured output: HIGH - verified `Output.object()` works with Zod v4 via local node test
+- Architecture: HIGH -- no architecture changes, existing code is working
+- Content changes: HIGH -- clear mapping of old->new across all files
+- Prompt quality: MEDIUM -- prompts are discretionary, quality depends on execution
+- Test coverage: HIGH -- existing tests just need content updates
 
-**Research date:** 2026-03-06
-**Valid until:** 2026-04-06 (stable stack, 30 days)
+**Research date:** 2026-03-06 (revised for business-first pivot)
+**Valid until:** 2026-04-06
