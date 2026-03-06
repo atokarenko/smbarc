@@ -176,6 +176,85 @@
     "savingPercent": "Saving %",
     "areasAnalyzed": "{count} areas analyzed"
   },
+  "modules": {
+    "title": "AI Automation Modules",
+    "subtitle": "Business solutions recommended based on your assessment",
+    "noAssessment": "Complete your assessment for personalized recommendations",
+    "noAssessmentCta": "Start Assessment",
+    "recommended": "Recommended",
+    "relevance": "Relevance: {score}%",
+    "impact": "Expected Impact",
+    "impactLevels": {
+      "high": "High Impact",
+      "medium": "Medium Impact",
+      "low": "Low Impact"
+    },
+    "comingSoon": "Coming Soon",
+    "categories": {
+      "hr": "HR & People",
+      "finance": "Finance",
+      "legal": "Legal & Compliance",
+      "decision-making": "Decision Making"
+    },
+    "allCategories": "All",
+    "items": {
+      "hiring-pipeline": {
+        "name": "Automate Hiring Pipeline",
+        "description": "AI-powered candidate screening, resume parsing, and interview scheduling to accelerate recruitment.",
+        "impact": "Reduce time-to-hire by 40% and improve candidate quality matching"
+      },
+      "employee-onboarding": {
+        "name": "Smart Employee Onboarding",
+        "description": "Automated onboarding workflows with personalized training paths and document management.",
+        "impact": "Cut onboarding time by 50% and improve new hire productivity"
+      },
+      "team-performance": {
+        "name": "Team Performance Analytics",
+        "description": "AI-driven insights into team productivity, engagement patterns, and performance optimization.",
+        "impact": "Identify performance gaps early and boost team output by 20%"
+      },
+      "invoice-processing": {
+        "name": "Automate Invoice Processing",
+        "description": "Intelligent document extraction, validation, and routing for accounts payable automation.",
+        "impact": "Process invoices 5x faster with 95% accuracy, reducing manual errors"
+      },
+      "cash-flow-forecasting": {
+        "name": "Cash Flow Forecasting",
+        "description": "ML-powered predictions of cash inflows and outflows based on historical patterns and market signals.",
+        "impact": "Improve cash position accuracy by 30% and optimize working capital"
+      },
+      "expense-automation": {
+        "name": "Expense Management Automation",
+        "description": "Automated expense categorization, policy compliance checking, and approval workflows.",
+        "impact": "Reduce expense processing costs by 60% and eliminate policy violations"
+      },
+      "contract-review": {
+        "name": "AI Contract Review",
+        "description": "Automated analysis of contract terms, risk clauses, and compliance requirements using NLP.",
+        "impact": "Review contracts 10x faster while catching 95% of risk clauses"
+      },
+      "compliance-monitoring": {
+        "name": "Compliance Monitoring",
+        "description": "Continuous monitoring of regulatory changes and automated compliance gap analysis.",
+        "impact": "Stay ahead of regulatory changes and reduce compliance costs by 40%"
+      },
+      "business-intelligence": {
+        "name": "Business Intelligence Dashboard",
+        "description": "AI-powered analytics combining data from all business systems into actionable insights.",
+        "impact": "Make data-driven decisions 3x faster with unified business visibility"
+      },
+      "risk-assessment": {
+        "name": "Predictive Risk Assessment",
+        "description": "Machine learning models that identify business risks before they materialize from operational data.",
+        "impact": "Detect 80% of risks 2-4 weeks earlier than traditional methods"
+      },
+      "churn-prediction": {
+        "name": "Customer Churn Prediction",
+        "description": "AI models analyzing customer behavior patterns to predict and prevent customer churn.",
+        "impact": "Reduce customer churn by 25% with early intervention strategies"
+      }
+    }
+  },
   "pages": {
     "comingSoon": "Coming soon"
   }
