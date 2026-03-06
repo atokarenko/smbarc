@@ -74,7 +74,12 @@
       "stable": "Stable",
       "efficient": "Efficient",
       "optimized": "Optimized"
-    }
+    },
+    "radarTitle": "Dimension Breakdown",
+    "viewRoadmap": "View Roadmap",
+    "viewRisks": "View Risks",
+    "viewRoi": "View ROI",
+    "roleView": "Viewing as {role}"
   },
   "settings": {
     "profile": "Profile",

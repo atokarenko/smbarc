@@ -74,7 +74,12 @@
       "stable": "Стабильный",
       "efficient": "Эффективный",
       "optimized": "Оптимизированный"
-    }
+    },
+    "radarTitle": "Разбивка по направлениям",
+    "viewRoadmap": "Посмотреть план",
+    "viewRisks": "Посмотреть риски",
+    "viewRoi": "Посмотреть ROI",
+    "roleView": "Просмотр как {role}"
   },
   "settings": {
     "profile": "Профиль",
