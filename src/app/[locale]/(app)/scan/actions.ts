@@ -1,10 +1,9 @@
 "use server";
 
 import { headers } from "next/headers";
-import { generateText, Output } from "ai";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db/prisma";
-import { getAIProvider } from "@/lib/ai/provider";
+import { generateStructuredOutput } from "@/lib/ai/provider";
 import { VALID_TRANSITIONS } from "@/lib/assessment/types";
 import type { AssessmentStatus, AssessmentResults, FollowUpQuestion } from "@/lib/assessment/types";
 import { followUpSchema, scoreAndRoadmapSchema, riskAndRoiSchema } from "@/lib/assessment/schemas";
@@ -15,6 +14,7 @@ import {
   buildScoreAndRoadmapPrompt,
   buildRiskAndRoiPrompt,
 } from "@/lib/assessment/prompts";
+import { buildKnowledgeContext } from "@/lib/knowledge";
 
 /**
  * Ensure the current user is authenticated. Returns the user ID.
@@ -231,16 +231,21 @@ export async function generateFollowUpQuestions(
       assessment.locale
     );
 
-    const { output } = await generateText({
-      model: getAIProvider(),
-      output: Output.object({ schema: followUpSchema }),
+    const output = await generateStructuredOutput({
+      schema: followUpSchema,
       system,
       prompt,
+      exampleOutput: JSON.stringify({
+        questions: [
+          {
+            question: "Example follow-up question?",
+            context: "Why we are asking this",
+            suggestedAnswers: ["Option A", "Option B", "Option C"],
+          },
+        ],
+        comprehensionLevel: "intermediate",
+      }),
     });
-
-    if (!output) {
-      throw new Error("AI returned no output for follow-up generation");
-    }
 
     const questions = output.questions;
     const comprehensionLevel = output.comprehensionLevel;
@@ -321,36 +326,78 @@ export async function completeAssessment(
   const locale = assessment.locale;
 
   try {
-    // Build prompts for both AI calls
-    const scorePrompt = buildScoreAndRoadmapPrompt(mergedAnswers, formulaScores, role, locale);
-    const riskPrompt = buildRiskAndRoiPrompt(mergedAnswers, formulaScores, role, locale);
+    // Load knowledge base context for the user's industry (from company profile)
+    const company = await prisma.company.findFirst({
+      where: { id: assessment.userId },
+    });
+    // Try to detect industry from company or answers
+    const industry = company?.industry || detectIndustryFromAnswers(mergedAnswers);
+    const knowledgeContext = await buildKnowledgeContext({
+      industry: industry || undefined,
+      dimensions: ["operations", "sales", "finance", "team", "risks"],
+    });
+
+    // Build prompts for both AI calls with knowledge context
+    const scorePrompt = buildScoreAndRoadmapPrompt(mergedAnswers, formulaScores, role, locale, knowledgeContext);
+    const riskPrompt = buildRiskAndRoiPrompt(mergedAnswers, formulaScores, role, locale, knowledgeContext);
 
     // Run BOTH AI calls in parallel
-    const [scoreResult, riskResult] = await Promise.all([
-      generateText({
-        model: getAIProvider(),
-        output: Output.object({ schema: scoreAndRoadmapSchema }),
+    const [scoreOutput, riskOutput] = await Promise.all([
+      generateStructuredOutput({
+        schema: scoreAndRoadmapSchema,
         system: scorePrompt.system,
         prompt: scorePrompt.prompt,
+        exampleOutput: JSON.stringify({
+          maturityScore: {
+            overall: 45,
+            dimensions: { operations: 35, sales: 50, finance: 40, team: 45, risks: 55 },
+          },
+          automationRoadmap: [
+            {
+              name: "Invoice automation",
+              description: "Automate invoice processing",
+              priority: "high",
+              expectedImpact: "Save 15 hours/week",
+              timeline: "2-3 months",
+            },
+          ],
+        }),
       }),
-      generateText({
-        model: getAIProvider(),
-        output: Output.object({ schema: riskAndRoiSchema }),
+      generateStructuredOutput({
+        schema: riskAndRoiSchema,
         system: riskPrompt.system,
         prompt: riskPrompt.prompt,
+        exampleOutput: JSON.stringify({
+          riskMap: [
+            {
+              category: "Operational",
+              level: "high",
+              description: "Key person dependency",
+              mitigation: "Document processes and cross-train",
+            },
+          ],
+          roiForecast: {
+            totalSavings: 120000,
+            timeframe: "12 months",
+            items: [
+              {
+                area: "Data entry",
+                currentCost: 50000,
+                projectedSaving: 35000,
+                confidence: "high",
+              },
+            ],
+          },
+        }),
       }),
     ]);
 
-    if (!scoreResult.output || !riskResult.output) {
-      throw new Error("AI returned incomplete scoring results");
-    }
-
     // Merge results into AssessmentResults shape
     const results: AssessmentResults = {
-      maturityScore: scoreResult.output.maturityScore,
-      automationRoadmap: scoreResult.output.automationRoadmap,
-      riskMap: riskResult.output.riskMap,
-      roiForecast: riskResult.output.roiForecast,
+      maturityScore: scoreOutput.maturityScore,
+      automationRoadmap: scoreOutput.automationRoadmap,
+      riskMap: riskOutput.riskMap,
+      roiForecast: riskOutput.roiForecast,
     };
 
     // Store results and formula scores, transition to COMPLETE
@@ -379,4 +426,26 @@ export async function completeAssessment(
         : "AI analysis failed. Please try again."
     );
   }
+}
+
+/**
+ * Simple industry detection from answer text when no company profile exists.
+ * Returns industry key or null.
+ */
+function detectIndustryFromAnswers(answers: Record<string, string>): string | null {
+  const text = Object.values(answers).join(" ").toLowerCase();
+  const patterns: [string, string[]][] = [
+    ["retail", ["store", "shop", "inventory", "merchandise", "ecommerce", "e-commerce", "cart", "магазин", "товар", "склад"]],
+    ["manufacturing", ["factory", "production", "manufacturing", "assembly", "warehouse", "производство", "завод", "сборка"]],
+    ["technology", ["saas", "software", "app", "platform", "code", "deploy", "api", "ПО", "приложение", "платформа"]],
+    ["healthcare", ["patient", "clinic", "medical", "health", "doctor", "nurse", "пациент", "клиника", "врач"]],
+    ["foodhospitality", ["restaurant", "food", "menu", "kitchen", "chef", "hotel", "ресторан", "кухня", "меню"]],
+    ["construction", ["construction", "building", "contractor", "site", "subcontractor", "строительство", "подрядчик", "стройка"]],
+    ["professionalservices", ["consulting", "legal", "accounting", "advisory", "client project", "консалтинг", "юридич", "бухгалтер"]],
+  ];
+  for (const [industry, keywords] of patterns) {
+    const hits = keywords.filter((kw) => text.includes(kw)).length;
+    if (hits >= 2) return industry;
+  }
+  return null;
 }

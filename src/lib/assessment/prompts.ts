@@ -5,6 +5,10 @@
  * 1. buildFollowUpPrompt - business detective: digs into pain points after each section
  * 2. buildScoreAndRoadmapPrompt - AI Call 1: business health score + automation roadmap
  * 3. buildRiskAndRoiPrompt - AI Call 2: business risk map + ROI forecast
+ *
+ * Knowledge base integration:
+ * - Industry benchmarks, automation cases, maturity rubrics, and compliance data
+ *   are injected into prompts via buildKnowledgeContext() when industry is provided.
  */
 
 // Role-specific framing for AI prompts
@@ -98,21 +102,28 @@ Based on these answers, generate follow-up questions that dig deeper into the sp
 /**
  * Build prompt for AI Call 1: Business health score + Automation Roadmap.
  * Frames the AI as a business efficiency analyst diagnosing business health.
+ * When knowledgeContext is provided, AI uses real industry benchmarks and automation case data.
  */
 export function buildScoreAndRoadmapPrompt(
   allAnswers: Record<string, string>,
   formulaScores: Record<string, number>,
   role: string,
-  locale: string
+  locale: string,
+  knowledgeContext?: string
 ): { system: string; prompt: string } {
   const roleCtx = getRoleContext(role, locale);
   const langInstr = getLanguageInstruction(locale);
+
+  const knowledgeSection = knowledgeContext
+    ? `\n\nREFERENCE DATA (use these real benchmarks to calibrate your analysis):\n${knowledgeContext}\n\nIMPORTANT: Compare the company's answers against the industry benchmarks above. Reference specific numbers: "Your churn rate appears to be above the industry norm of X%". Use automation case data for realistic cost/timeline estimates.`
+    : "";
 
   const system = `You are a business efficiency analyst. Your job is to diagnose the health of this business across 5 areas and prescribe concrete automation solutions. Think of it as a business health checkup -- not an abstract maturity evaluation.
 
 ${roleCtx}
 
 ${langInstr}
+${knowledgeSection}
 
 Scoring guidelines (Business Health Score, 0-100 per dimension):
 - Score 5 dimensions: operations, sales, finance, team, risks
@@ -121,11 +132,13 @@ Scoring guidelines (Business Health Score, 0-100 per dimension):
 - You are provided with formula-based dimension scores (0-100) as a baseline -- adjust each by +/- 10 based on your qualitative analysis of the answers
 - If answers are vague or short, do NOT inflate scores -- reflect the uncertainty
 - The overall score should be a weighted average of the 5 dimension scores
+- Use maturity rubrics from reference data to calibrate what each score level means
 
 Automation Roadmap guidelines:
 - Generate 3-5 recommendations based on SPECIFIC problems described in the answers
 - Each recommendation must include: name, description, priority (high/medium/low), expectedImpact, timeline
 - Be concrete: "Automate invoice processing -> save 15 hours/week -> ~$2,400/month"
+- Use REAL implementation costs and timelines from reference automation cases when available
 - Prioritize quick wins first (high priority), then larger transformations (medium/low)
 - Each item should connect directly to a pain point the user described
 - Frame impact per role: CEO sees revenue impact, COO sees hours saved, CTO sees tools needed`;
@@ -146,21 +159,28 @@ Analyze these answers and generate:
 /**
  * Build prompt for AI Call 2: Business Risk Map + ROI Forecast.
  * Frames the AI as a business risk and savings analyst.
+ * When knowledgeContext is provided, AI uses real compliance data and ROI benchmarks.
  */
 export function buildRiskAndRoiPrompt(
   allAnswers: Record<string, string>,
   formulaScores: Record<string, number>,
   role: string,
-  locale: string
+  locale: string,
+  knowledgeContext?: string
 ): { system: string; prompt: string } {
   const roleCtx = getRoleContext(role, locale);
   const langInstr = getLanguageInstruction(locale);
+
+  const knowledgeSection = knowledgeContext
+    ? `\n\nREFERENCE DATA (use these real benchmarks for calibrated risk and ROI analysis):\n${knowledgeContext}\n\nIMPORTANT: Use real implementation costs, payback periods, and success rates from the automation case data. Reference industry-specific compliance requirements. Provide conservative, evidence-based projections.`
+    : "";
 
   const system = `You are a business risk and savings analyst. Your job is to identify operational risks hiding in this business and project realistic savings from automating specific processes. Focus on BUSINESS risks -- not abstract technology risks.
 
 ${roleCtx}
 
 ${langInstr}
+${knowledgeSection}
 
 Risk map guidelines:
 - Generate 3-5 BUSINESS risks based on what the answers reveal:
