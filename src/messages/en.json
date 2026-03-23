@@ -8,6 +8,7 @@
       "risks": "Risks",
       "roi": "ROI",
       "modules": "Modules",
+      "knowledge": "Knowledge Base",
       "settings": "Settings"
     },
     "roles": {
@@ -252,6 +253,62 @@
         "name": "Customer Churn Prediction",
         "description": "AI models analyzing customer behavior patterns to predict and prevent customer churn.",
         "impact": "Reduce customer churn by 25% with early intervention strategies"
+      }
+    }
+  },
+  "knowledge": {
+    "title": "Knowledge Base",
+    "subtitle": "Industry benchmarks, automation cases & compliance requirements",
+    "searchPlaceholder": "Search...",
+    "noResults": "No results found",
+    "allCategories": "All",
+    "dataProtection": "Data Protection",
+    "tabs": {
+      "industries": "Industries",
+      "automationCases": "Automation Cases",
+      "compliance": "Compliance"
+    },
+    "industries": {
+      "profitMargin": "Profit Margin",
+      "turnover": "Turnover",
+      "aiAdoption": "AI Adoption",
+      "days": "days",
+      "painPoints": "Key Pain Points",
+      "opportunities": "Top Automation Opportunities"
+    },
+    "complexity": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "cases": {
+      "cost": "Cost",
+      "savings": "Savings",
+      "mo": "mo",
+      "payback": "Payback",
+      "months": "mo",
+      "timeSaved": "Time Saved",
+      "hrsWeek": "hrs/week",
+      "tools": "Common Tools"
+    },
+    "compliance": {
+      "generalTitle": "General Requirements",
+      "industryTitle": "Industry-Specific Compliance",
+      "checklistTitle": "AI Implementation Checklist",
+      "costToComply": "Typical Cost to Comply",
+      "keySteps": "Key Steps",
+      "keyRegulations": "Key Regulations",
+      "commonGaps": "Common Gaps",
+      "certifications": "Certifications",
+      "severity": {
+        "critical": "Critical",
+        "important": "Important",
+        "recommended": "Recommended"
+      },
+      "phases": {
+        "preImplementation": "Pre-Implementation",
+        "duringImplementation": "During Implementation",
+        "ongoingMonitoring": "Ongoing Monitoring"
       }
     }
   },

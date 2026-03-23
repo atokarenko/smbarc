@@ -7,6 +7,7 @@ import {
   ShieldAlert,
   TrendingUp,
   Boxes,
+  BookOpen,
   Settings,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -34,6 +35,7 @@ const NAV_ITEMS = [
   { key: "risks", href: "/risks", icon: ShieldAlert },
   { key: "roi", href: "/roi", icon: TrendingUp },
   { key: "modules", href: "/modules", icon: Boxes },
+  { key: "knowledge", href: "/knowledge", icon: BookOpen },
   { key: "settings", href: "/settings", icon: Settings },
 ] as const;
 

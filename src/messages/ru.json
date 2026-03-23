@@ -8,6 +8,7 @@
       "risks": "Риски",
       "roi": "ROI",
       "modules": "Модули",
+      "knowledge": "База знаний",
       "settings": "Настройки"
     },
     "roles": {
@@ -252,6 +253,62 @@
         "name": "Прогнозирование оттока клиентов",
         "description": "ИИ-модели анализа поведения клиентов для прогнозирования и предотвращения оттока.",
         "impact": "Снижение оттока клиентов на 25% благодаря раннему вмешательству"
+      }
+    }
+  },
+  "knowledge": {
+    "title": "База знаний",
+    "subtitle": "Отраслевые бенчмарки, кейсы автоматизации и требования комплаенса",
+    "searchPlaceholder": "Поиск...",
+    "noResults": "Ничего не найдено",
+    "allCategories": "Все",
+    "dataProtection": "Защита данных",
+    "tabs": {
+      "industries": "Отрасли",
+      "automationCases": "Кейсы автоматизации",
+      "compliance": "Комплаенс"
+    },
+    "industries": {
+      "profitMargin": "Маржа",
+      "turnover": "Текучесть",
+      "aiAdoption": "Внедрение ИИ",
+      "days": "дней",
+      "painPoints": "Основные проблемы",
+      "opportunities": "Возможности автоматизации"
+    },
+    "complexity": {
+      "low": "Низкая",
+      "medium": "Средняя",
+      "high": "Высокая"
+    },
+    "cases": {
+      "cost": "Стоимость",
+      "savings": "Экономия",
+      "mo": "мес",
+      "payback": "Окупаемость",
+      "months": "мес",
+      "timeSaved": "Экономия времени",
+      "hrsWeek": "ч/нед",
+      "tools": "Популярные инструменты"
+    },
+    "compliance": {
+      "generalTitle": "Общие требования",
+      "industryTitle": "Отраслевой комплаенс",
+      "checklistTitle": "Чеклист внедрения ИИ",
+      "costToComply": "Типичные затраты на соответствие",
+      "keySteps": "Ключевые шаги",
+      "keyRegulations": "Ключевые регуляции",
+      "commonGaps": "Типичные пробелы",
+      "certifications": "Сертификации",
+      "severity": {
+        "critical": "Критично",
+        "important": "Важно",
+        "recommended": "Рекомендовано"
+      },
+      "phases": {
+        "preImplementation": "До внедрения",
+        "duringImplementation": "Во время внедрения",
+        "ongoingMonitoring": "Постоянный мониторинг"
       }
     }
   },
