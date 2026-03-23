@@ -1,18 +1,15 @@
 #!/bin/sh
 set -e
 
-PRISMA="./node_modules/.bin/prisma"
-
-# Initialize SQLite database if not exists
 DB_PATH="${DATABASE_URL#file:}"
+
+# Copy seed database to volume on first run
 if [ ! -f "$DB_PATH" ]; then
-  echo ">>> Initializing database..."
-  $PRISMA db push --skip-generate
-  $PRISMA db seed
+  echo ">>> First run — copying seed database..."
+  cp /app/seed.db "$DB_PATH"
   echo ">>> Database ready."
 else
-  echo ">>> Database exists, running migrations..."
-  $PRISMA db push --skip-generate
+  echo ">>> Database exists at $DB_PATH"
 fi
 
 # Start Next.js standalone server
