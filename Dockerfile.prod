@@ -44,10 +44,16 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 
+# Create prisma CLI symlink
+RUN mkdir -p ./node_modules/.bin && ln -s ../prisma/build/index.js ./node_modules/.bin/prisma && chmod +x ./node_modules/.bin/prisma
+
 # Copy seed dependencies
 COPY --from=builder /app/node_modules/tsx ./node_modules/tsx
 COPY --from=builder /app/node_modules/esbuild ./node_modules/esbuild
 COPY --from=builder /app/node_modules/@esbuild ./node_modules/@esbuild
+
+# package.json needed for prisma seed config
+COPY --from=builder /app/package.json ./package.json
 
 # i18n message files
 COPY --from=builder /app/src/messages ./src/messages
